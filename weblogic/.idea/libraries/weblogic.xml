@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="weblogic">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/weblogic.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

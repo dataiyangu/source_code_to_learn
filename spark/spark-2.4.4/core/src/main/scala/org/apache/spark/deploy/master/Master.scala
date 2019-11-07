@@ -1052,9 +1052,13 @@ private[deploy] object Master extends Logging {
   def main(argStrings: Array[String]) {
     Thread.setDefaultUncaughtExceptionHandler(new SparkUncaughtExceptionHandler(
       exitOnUncaughtException = false))
+    //1初始化log对象
     Utils.initDaemon(log)
+    //2加载sparkconf
     val conf = new SparkConf
+    //3解析master启动参数
     val args = new MasterArguments(argStrings, conf)
+    //启动rpc框架端点
     val (rpcEnv, _, _) = startRpcEnvAndEndpoint(args.host, args.port, args.webUiPort, conf)
     rpcEnv.awaitTermination()
   }

@@ -1,0 +1,202 @@
+2017-09-27 21:13:50,963   INFO --- [main]  org.apache.spark.SparkContext(line:54) : Running Spark version 2.1.1
+2017-09-27 21:13:51,460   INFO --- [main]  org.apache.spark.SecurityManager(line:54) : Changing view acls to: Administrator
+2017-09-27 21:13:51,466   INFO --- [main]  org.apache.spark.SecurityManager(line:54) : Changing modify acls to: Administrator
+2017-09-27 21:13:51,467   INFO --- [main]  org.apache.spark.SecurityManager(line:54) : Changing view acls groups to: 
+2017-09-27 21:13:51,468   INFO --- [main]  org.apache.spark.SecurityManager(line:54) : Changing modify acls groups to: 
+2017-09-27 21:13:51,469   INFO --- [main]  org.apache.spark.SecurityManager(line:54) : SecurityManager: authentication disabled; ui acls disabled; users  with view permissions: Set(Administrator); groups with view permissions: Set(); users  with modify permissions: Set(Administrator); groups with modify permissions: Set()
+2017-09-27 21:13:52,243   INFO --- [main]  org.apache.spark.util.Utils(line:54) : Successfully started service 'sparkDriver' on port 51442.
+2017-09-27 21:13:52,263   INFO --- [main]  org.apache.spark.SparkEnv(line:54) : Registering MapOutputTracker
+2017-09-27 21:13:52,284   INFO --- [main]  org.apache.spark.SparkEnv(line:54) : Registering BlockManagerMaster
+2017-09-27 21:13:52,288   INFO --- [main]  org.apache.spark.storage.BlockManagerMasterEndpoint(line:54) : Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+2017-09-27 21:13:52,289   INFO --- [main]  org.apache.spark.storage.BlockManagerMasterEndpoint(line:54) : BlockManagerMasterEndpoint up
+2017-09-27 21:13:52,301   INFO --- [main]  org.apache.spark.storage.DiskBlockManager(line:54) : Created local directory at C:\Users\Administrator\AppData\Local\Temp\blockmgr-bd532e57-a5d5-42ff-8363-b7e6250b3f5a
+2017-09-27 21:13:52,322   INFO --- [main]  org.apache.spark.storage.memory.MemoryStore(line:54) : MemoryStore started with capacity 1992.0 MB
+2017-09-27 21:13:52,392   INFO --- [main]  org.apache.spark.SparkEnv(line:54) : Registering OutputCommitCoordinator
+2017-09-27 21:13:52,484   INFO --- [main]  org.spark_project.jetty.util.log(line:186) : Logging initialized @2877ms
+2017-09-27 21:13:52,594   INFO --- [main]  org.spark_project.jetty.server.Server(line:327) : jetty-9.2.z-SNAPSHOT
+2017-09-27 21:13:52,612   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@7bb35cc6{/jobs,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,612   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@203c20cf{/jobs/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,613   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@2a1debfa{/jobs/job,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,613   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@44de94c3{/jobs/job/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,613   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@256aa5f2{/stages,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,614   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@6411d3c8{/stages/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,614   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@2116b68b{/stages/stage,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,614   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@11de56e6{/stages/stage/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,615   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@616b241a{/stages/pool,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,615   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@b8e246c{/stages/pool/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,615   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@1f387978{/storage,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,616   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@7cb2651f{/storage/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,616   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@4441d567{/storage/rdd,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,616   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@3e1624c7{/storage/rdd/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,616   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@62b969c4{/environment,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,617   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@dcc6211{/environment/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,617   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@47ec7422{/executors,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,617   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@48535004{/executors/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,618   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@610df783{/executors/threadDump,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,619   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@f3fcd59{/executors/threadDump/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,626   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@2b56f5f8{/static,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,626   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@79d743e6{/,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,627   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@776802b0{/api,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,627   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@64c4c01{/jobs/job/kill,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,628   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@1aa99005{/stages/stage/kill,null,AVAILABLE,@Spark}
+2017-09-27 21:13:52,635   INFO --- [main]  org.spark_project.jetty.server.ServerConnector(line:266) : Started Spark@60737b23{HTTP/1.1}{0.0.0.0:4040}
+2017-09-27 21:13:52,635   INFO --- [main]  org.spark_project.jetty.server.Server(line:379) : Started @3031ms
+2017-09-27 21:13:52,636   INFO --- [main]  org.apache.spark.util.Utils(line:54) : Successfully started service 'SparkUI' on port 4040.
+2017-09-27 21:13:52,639   INFO --- [main]  org.apache.spark.ui.SparkUI(line:54) : Bound SparkUI to 0.0.0.0, and started at http://192.168.56.1:4040
+2017-09-27 21:13:52,654   INFO --- [main]  org.apache.spark.SparkContext(line:54) : Added JAR C:\Users\Administrator\Desktop\Spark\3.code\spark\sparkcore_wordcount\target\wordcount-jar-with-dependencies.jar at spark://192.168.56.1:51442/jars/wordcount-jar-with-dependencies.jar with timestamp 1506518032653
+2017-09-27 21:13:52,759   INFO --- [appclient-register-master-threadpool-0]  org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint(line:54) : Connecting to master spark://master01:7077...
+2017-09-27 21:13:52,884   INFO --- [netty-rpc-connection-0]  org.apache.spark.network.client.TransportClientFactory(line:254) : Successfully created connection to master01/192.168.56.150:7077 after 26 ms (0 ms spent in bootstraps)
+2017-09-27 21:13:52,978   INFO --- [dispatcher-event-loop-2]  org.apache.spark.scheduler.cluster.StandaloneSchedulerBackend(line:54) : Connected to Spark cluster with app ID app-20170927211350-0001
+2017-09-27 21:13:52,983   INFO --- [dispatcher-event-loop-6]  org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint(line:54) : Executor added: app-20170927211350-0001/0 on worker-20170927210940-192.168.56.152-38291 (192.168.56.152:38291) with 3 cores
+2017-09-27 21:13:52,992   INFO --- [dispatcher-event-loop-6]  org.apache.spark.scheduler.cluster.StandaloneSchedulerBackend(line:54) : Granted executor ID app-20170927211350-0001/0 on hostPort 192.168.56.152:38291 with 3 cores, 1024.0 MB RAM
+2017-09-27 21:13:52,993   INFO --- [dispatcher-event-loop-6]  org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint(line:54) : Executor added: app-20170927211350-0001/1 on worker-20170927210940-192.168.56.151-42917 (192.168.56.151:42917) with 3 cores
+2017-09-27 21:13:52,994   INFO --- [dispatcher-event-loop-6]  org.apache.spark.scheduler.cluster.StandaloneSchedulerBackend(line:54) : Granted executor ID app-20170927211350-0001/1 on hostPort 192.168.56.151:42917 with 3 cores, 1024.0 MB RAM
+2017-09-27 21:13:53,004   INFO --- [dispatcher-event-loop-4]  org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint(line:54) : Executor updated: app-20170927211350-0001/1 is now RUNNING
+2017-09-27 21:13:53,005   INFO --- [dispatcher-event-loop-4]  org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint(line:54) : Executor updated: app-20170927211350-0001/0 is now RUNNING
+2017-09-27 21:13:53,021   INFO --- [main]  org.apache.spark.util.Utils(line:54) : Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 51484.
+2017-09-27 21:13:53,023   INFO --- [main]  org.apache.spark.network.netty.NettyBlockTransferService(line:54) : Server created on 192.168.56.1:51484
+2017-09-27 21:13:53,026   INFO --- [main]  org.apache.spark.storage.BlockManager(line:54) : Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+2017-09-27 21:13:53,029   INFO --- [main]  org.apache.spark.storage.BlockManagerMaster(line:54) : Registering BlockManager BlockManagerId(driver, 192.168.56.1, 51484, None)
+2017-09-27 21:13:53,034   INFO --- [dispatcher-event-loop-0]  org.apache.spark.storage.BlockManagerMasterEndpoint(line:54) : Registering block manager 192.168.56.1:51484 with 1992.0 MB RAM, BlockManagerId(driver, 192.168.56.1, 51484, None)
+2017-09-27 21:13:53,037   INFO --- [main]  org.apache.spark.storage.BlockManagerMaster(line:54) : Registered BlockManager BlockManagerId(driver, 192.168.56.1, 51484, None)
+2017-09-27 21:13:53,038   INFO --- [main]  org.apache.spark.storage.BlockManager(line:54) : Initialized BlockManager: BlockManagerId(driver, 192.168.56.1, 51484, None)
+2017-09-27 21:13:53,281   INFO --- [main]  org.spark_project.jetty.server.handler.ContextHandler(line:744) : Started o.s.j.s.ServletContextHandler@10dc7d6{/metrics/json,null,AVAILABLE,@Spark}
+2017-09-27 21:13:53,301   INFO --- [main]  org.apache.spark.scheduler.cluster.StandaloneSchedulerBackend(line:54) : SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+2017-09-27 21:13:54,029   INFO --- [main]  org.apache.spark.storage.memory.MemoryStore(line:54) : Block broadcast_0 stored as values in memory (estimated size 127.1 KB, free 1991.9 MB)
+2017-09-27 21:13:54,232   INFO --- [main]  org.apache.spark.storage.memory.MemoryStore(line:54) : Block broadcast_0_piece0 stored as bytes in memory (estimated size 14.3 KB, free 1991.9 MB)
+2017-09-27 21:13:54,245   INFO --- [dispatcher-event-loop-5]  org.apache.spark.storage.BlockManagerInfo(line:54) : Added broadcast_0_piece0 in memory on 192.168.56.1:51484 (size: 14.3 KB, free: 1992.0 MB)
+2017-09-27 21:13:54,258   INFO --- [main]  org.apache.spark.SparkContext(line:54) : Created broadcast 0 from textFile at WordCount.scala:25
+2017-09-27 21:13:54,496   INFO --- [main]  org.apache.spark.SparkContext(line:54) : Starting job: collect at WordCount.scala:28
+2017-09-27 21:13:54,582   INFO --- [dag-scheduler-event-loop]  org.apache.hadoop.mapred.FileInputFormat(line:253) : Total input paths to process : 1
+2017-09-27 21:13:54,928   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Registering RDD 3 (map at WordCount.scala:25)
+2017-09-27 21:13:54,929   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Registering RDD 5 (sortBy at WordCount.scala:25)
+2017-09-27 21:13:54,932   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Got job 0 (collect at WordCount.scala:28) with 1 output partitions
+2017-09-27 21:13:54,933   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Final stage: ResultStage 2 (collect at WordCount.scala:28)
+2017-09-27 21:13:54,934   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Parents of final stage: List(ShuffleMapStage 1)
+2017-09-27 21:13:54,936   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Missing parents: List(ShuffleMapStage 1)
+2017-09-27 21:13:54,946   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Submitting ShuffleMapStage 0 (MapPartitionsRDD[3] at map at WordCount.scala:25), which has no missing parents
+2017-09-27 21:13:54,991   INFO --- [dag-scheduler-event-loop]  org.apache.spark.storage.memory.MemoryStore(line:54) : Block broadcast_1 stored as values in memory (estimated size 4.8 KB, free 1991.9 MB)
+2017-09-27 21:13:54,995   INFO --- [dag-scheduler-event-loop]  org.apache.spark.storage.memory.MemoryStore(line:54) : Block broadcast_1_piece0 stored as bytes in memory (estimated size 2.8 KB, free 1991.9 MB)
+2017-09-27 21:13:54,996   INFO --- [dispatcher-event-loop-7]  org.apache.spark.storage.BlockManagerInfo(line:54) : Added broadcast_1_piece0 in memory on 192.168.56.1:51484 (size: 2.8 KB, free: 1992.0 MB)
+2017-09-27 21:13:54,997   INFO --- [dag-scheduler-event-loop]  org.apache.spark.SparkContext(line:54) : Created broadcast 1 from broadcast at DAGScheduler.scala:996
+2017-09-27 21:13:55,004   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : Submitting 2 missing tasks from ShuffleMapStage 0 (MapPartitionsRDD[3] at map at WordCount.scala:25)
+2017-09-27 21:13:55,007   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.TaskSchedulerImpl(line:54) : Adding task set 0.0 with 2 tasks
+2017-09-27 21:13:55,621   INFO --- [dispatcher-event-loop-4]  org.apache.spark.scheduler.cluster.CoarseGrainedSchedulerBackend$DriverEndpoint(line:54) : Registered executor NettyRpcEndpointRef(null) (192.168.56.152:36754) with ID 0
+2017-09-27 21:13:55,682   INFO --- [dispatcher-event-loop-4]  org.apache.spark.scheduler.TaskSetManager(line:54) : Starting task 0.0 in stage 0.0 (TID 0, 192.168.56.152, executor 0, partition 0, PROCESS_LOCAL, 6083 bytes)
+2017-09-27 21:13:55,692   INFO --- [dispatcher-event-loop-4]  org.apache.spark.scheduler.TaskSetManager(line:54) : Starting task 1.0 in stage 0.0 (TID 1, 192.168.56.152, executor 0, partition 1, PROCESS_LOCAL, 6083 bytes)
+2017-09-27 21:13:55,703   INFO --- [dispatcher-event-loop-3]  org.apache.spark.storage.BlockManagerMasterEndpoint(line:54) : Registering block manager 192.168.56.152:44339 with 366.3 MB RAM, BlockManagerId(0, 192.168.56.152, 44339, None)
+2017-09-27 21:13:55,814   INFO --- [dispatcher-event-loop-6]  org.apache.spark.scheduler.cluster.CoarseGrainedSchedulerBackend$DriverEndpoint(line:54) : Registered executor NettyRpcEndpointRef(null) (192.168.56.151:44020) with ID 1
+2017-09-27 21:13:55,872   INFO --- [dispatcher-event-loop-5]  org.apache.spark.storage.BlockManagerMasterEndpoint(line:54) : Registering block manager 192.168.56.151:42714 with 366.3 MB RAM, BlockManagerId(1, 192.168.56.151, 42714, None)
+2017-09-27 21:13:56,048   WARN --- [task-result-getter-1]  org.apache.spark.scheduler.TaskSetManager(line:66) : Lost task 1.0 in stage 0.0 (TID 1, 192.168.56.152, executor 0): java.lang.RuntimeException: Stream '/jars/wordcount-jar-with-dependencies.jar' was not found.
+	at org.apache.spark.network.client.TransportResponseHandler.handle(TransportResponseHandler.java:222)
+	at org.apache.spark.network.server.TransportChannelHandler.channelRead(TransportChannelHandler.java:120)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at io.netty.handler.timeout.IdleStateHandler.channelRead(IdleStateHandler.java:266)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:102)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at org.apache.spark.network.util.TransportFrameDecoder.channelRead(TransportFrameDecoder.java:85)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1294)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:911)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:131)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:652)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:575)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:489)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:451)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:140)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:745)
+
+2017-09-27 21:13:56,050   INFO --- [task-result-getter-0]  org.apache.spark.scheduler.TaskSetManager(line:54) : Lost task 0.0 in stage 0.0 (TID 0) on 192.168.56.152, executor 0: java.lang.RuntimeException (Stream '/jars/wordcount-jar-with-dependencies.jar' was not found.) [duplicate 1]
+2017-09-27 21:13:56,052   INFO --- [dispatcher-event-loop-1]  org.apache.spark.scheduler.TaskSetManager(line:54) : Starting task 0.1 in stage 0.0 (TID 2, 192.168.56.151, executor 1, partition 0, PROCESS_LOCAL, 6083 bytes)
+2017-09-27 21:13:56,053   INFO --- [dispatcher-event-loop-1]  org.apache.spark.scheduler.TaskSetManager(line:54) : Starting task 1.1 in stage 0.0 (TID 3, 192.168.56.152, executor 0, partition 1, PROCESS_LOCAL, 6083 bytes)
+2017-09-27 21:13:56,094   INFO --- [task-result-getter-2]  org.apache.spark.scheduler.TaskSetManager(line:54) : Lost task 1.1 in stage 0.0 (TID 3) on 192.168.56.152, executor 0: java.lang.RuntimeException (Stream '/jars/wordcount-jar-with-dependencies.jar' was not found.) [duplicate 2]
+2017-09-27 21:13:56,096   INFO --- [dispatcher-event-loop-7]  org.apache.spark.scheduler.TaskSetManager(line:54) : Starting task 1.2 in stage 0.0 (TID 4, 192.168.56.152, executor 0, partition 1, PROCESS_LOCAL, 6083 bytes)
+2017-09-27 21:13:56,135   INFO --- [task-result-getter-3]  org.apache.spark.scheduler.TaskSetManager(line:54) : Lost task 1.2 in stage 0.0 (TID 4) on 192.168.56.152, executor 0: java.lang.RuntimeException (Stream '/jars/wordcount-jar-with-dependencies.jar' was not found.) [duplicate 3]
+2017-09-27 21:13:56,137   INFO --- [dispatcher-event-loop-2]  org.apache.spark.scheduler.TaskSetManager(line:54) : Starting task 1.3 in stage 0.0 (TID 5, 192.168.56.152, executor 0, partition 1, PROCESS_LOCAL, 6083 bytes)
+2017-09-27 21:13:56,175   INFO --- [task-result-getter-1]  org.apache.spark.scheduler.TaskSetManager(line:54) : Lost task 1.3 in stage 0.0 (TID 5) on 192.168.56.152, executor 0: java.lang.RuntimeException (Stream '/jars/wordcount-jar-with-dependencies.jar' was not found.) [duplicate 4]
+2017-09-27 21:13:56,176  ERROR --- [task-result-getter-1]  org.apache.spark.scheduler.TaskSetManager(line:70) : Task 1 in stage 0.0 failed 4 times; aborting job
+2017-09-27 21:13:56,182   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.TaskSchedulerImpl(line:54) : Cancelling stage 0
+2017-09-27 21:13:56,187   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.TaskSchedulerImpl(line:54) : Stage 0 was cancelled
+2017-09-27 21:13:56,189   INFO --- [dag-scheduler-event-loop]  org.apache.spark.scheduler.DAGScheduler(line:54) : ShuffleMapStage 0 (map at WordCount.scala:25) failed in 1.165 s due to Job aborted due to stage failure: Task 1 in stage 0.0 failed 4 times, most recent failure: Lost task 1.3 in stage 0.0 (TID 5, 192.168.56.152, executor 0): java.lang.RuntimeException: Stream '/jars/wordcount-jar-with-dependencies.jar' was not found.
+	at org.apache.spark.network.client.TransportResponseHandler.handle(TransportResponseHandler.java:222)
+	at org.apache.spark.network.server.TransportChannelHandler.channelRead(TransportChannelHandler.java:120)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at io.netty.handler.timeout.IdleStateHandler.channelRead(IdleStateHandler.java:266)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:102)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at org.apache.spark.network.util.TransportFrameDecoder.channelRead(TransportFrameDecoder.java:85)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:346)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1294)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:367)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:353)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:911)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:131)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:652)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:575)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:489)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:451)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:140)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:745)
+
+Driver stacktrace:
+2017-09-27 21:13:56,197   INFO --- [main]  org.apache.spark.scheduler.DAGScheduler(line:54) : Job 0 failed: collect at WordCount.scala:28, took 1.700998 s
+2017-09-27 21:13:56,205   INFO --- [Thread-1]  org.apache.spark.SparkContext(line:54) : Invoking stop() from shutdown hook
+2017-09-27 21:13:56,210   INFO --- [Thread-1]  org.spark_project.jetty.server.ServerConnector(line:306) : Stopped Spark@60737b23{HTTP/1.1}{0.0.0.0:4040}
+2017-09-27 21:13:56,212   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@1aa99005{/stages/stage/kill,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,213   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@64c4c01{/jobs/job/kill,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,213   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@776802b0{/api,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,213   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@79d743e6{/,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,213   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@2b56f5f8{/static,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,214   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@f3fcd59{/executors/threadDump/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,214   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@610df783{/executors/threadDump,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,214   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@48535004{/executors/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,214   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@47ec7422{/executors,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,214   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@dcc6211{/environment/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,215   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@62b969c4{/environment,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,215   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@3e1624c7{/storage/rdd/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,215   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@4441d567{/storage/rdd,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,215   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@7cb2651f{/storage/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,215   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@1f387978{/storage,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,216   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@b8e246c{/stages/pool/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,216   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@616b241a{/stages/pool,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,216   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@11de56e6{/stages/stage/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,216   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@2116b68b{/stages/stage,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,217   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@6411d3c8{/stages/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,217   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@256aa5f2{/stages,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,217   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@44de94c3{/jobs/job/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,217   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@2a1debfa{/jobs/job,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,217   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@203c20cf{/jobs/json,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,218   INFO --- [Thread-1]  org.spark_project.jetty.server.handler.ContextHandler(line:865) : Stopped o.s.j.s.ServletContextHandler@7bb35cc6{/jobs,null,UNAVAILABLE,@Spark}
+2017-09-27 21:13:56,220   INFO --- [Thread-1]  org.apache.spark.ui.SparkUI(line:54) : Stopped Spark web UI at http://192.168.56.1:4040
+2017-09-27 21:13:56,227   INFO --- [Thread-1]  org.apache.spark.scheduler.cluster.StandaloneSchedulerBackend(line:54) : Shutting down all executors
+2017-09-27 21:13:56,228   INFO --- [dispatcher-event-loop-7]  org.apache.spark.scheduler.cluster.CoarseGrainedSchedulerBackend$DriverEndpoint(line:54) : Asking each executor to shut down
+2017-09-27 21:13:56,250   INFO --- [dispatcher-event-loop-3]  org.apache.spark.MapOutputTrackerMasterEndpoint(line:54) : MapOutputTrackerMasterEndpoint stopped!
+2017-09-27 21:13:56,269   INFO --- [Thread-1]  org.apache.spark.storage.memory.MemoryStore(line:54) : MemoryStore cleared
+2017-09-27 21:13:56,270   INFO --- [Thread-1]  org.apache.spark.storage.BlockManager(line:54) : BlockManager stopped
+2017-09-27 21:13:56,280   INFO --- [Thread-1]  org.apache.spark.storage.BlockManagerMaster(line:54) : BlockManagerMaster stopped
+2017-09-27 21:13:56,283   INFO --- [dispatcher-event-loop-0]  org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint(line:54) : OutputCommitCoordinator stopped!
+2017-09-27 21:13:56,288   INFO --- [Thread-1]  org.apache.spark.SparkContext(line:54) : Successfully stopped SparkContext
+2017-09-27 21:13:56,289   INFO --- [Thread-1]  org.apache.spark.util.ShutdownHookManager(line:54) : Shutdown hook called
+2017-09-27 21:13:56,290   INFO --- [Thread-1]  org.apache.spark.util.ShutdownHookManager(line:54) : Deleting directory C:\Users\Administrator\AppData\Local\Temp\spark-9927298a-2a9c-4783-9270-21b6d2097b16

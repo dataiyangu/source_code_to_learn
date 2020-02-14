@@ -30,4 +30,9 @@ public class DemoAction {
             e.printStackTrace();
         }
     }
+
+    @RequestMapping("/remove")
+    public void remove(HttpServletRequest req,HttpServletResponse resp,
+                       @RequestParam("id") Integer id){
+    }
 }

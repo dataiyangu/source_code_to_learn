@@ -5,7 +5,6 @@ import com.leesin.mvcframework.annotation.Autowired;
 import com.leesin.mvcframework.annotation.Controller;
 import com.leesin.mvcframework.annotation.RequestMapping;
 import com.leesin.mvcframework.annotation.RequestParam;
-import com.sun.deploy.net.HttpResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +19,11 @@ public class DemoAction {
     @RequestMapping("/query")
     public void query(HttpServletRequest req, HttpServletResponse resp , @RequestParam("name") String name) {
         String result = demoService.get(name);
+        try {
+            resp.getWriter().write(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/add")

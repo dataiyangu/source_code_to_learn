@@ -106,6 +106,9 @@ public class CglibSubclassingInstantiationStrategy extends SimpleInstantiationSt
 		 * Ignored if the {@code ctor} parameter is {@code null}.
 		 * @return new instance of the dynamically generated subclass
 		 */
+		/*CGLib 是一个常用的字节码生成器的类库，它提供了一系列 API 实现 Java 字节码的生成和转换功能。
+		我们在学习 JDK 的动态代理时都知道，JDK 的动态代理只能针对接口，如果一个类没有实现任何接口，
+		要对其进行动态代理只能使用 CGLib。*/
 		//使用CGLIB进行Bean对象实例化
 		public Object instantiate(@Nullable Constructor<?> ctor, @Nullable Object... args) {
 			//创建代理子类

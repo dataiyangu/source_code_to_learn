@@ -38,6 +38,9 @@ import org.springframework.aop.support.DefaultPointcutAdvisor;
  * @author Juergen Hoeller
  */
 @SuppressWarnings("serial")
+		/*DefaultAdvisorAdapterRegistry 设置了一系列的是配置，正是这些适配器的实现，为
+		Spring AOP 提供了编织能力。下面以 MethodBeforeAdviceAdapter 为例，看具体的
+		实现*/
 public class DefaultAdvisorAdapterRegistry implements AdvisorAdapterRegistry, Serializable {
 
 	private final List<AdvisorAdapter> adapters = new ArrayList<>(3);

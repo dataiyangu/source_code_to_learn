@@ -22,6 +22,11 @@ import org.springframework.jmx.IJmxTestBean;
 /**
  * @author Juergen Hoeller
  */
+		/*FactoryBean 的实现类有非常多，比如：Proxy、RMI、JNDI、ServletContextFactoryBean 等等，
+		FactoryBean 接口为 Spring 容器提供了一个很好的封装机制，具体的 getObject()有不同的实现类根
+		据不同的实现策略来具体提供，我们分析一个最简单的 AnnotationTestFactoryBean 的实现源码
+		其他的 Proxy，RMI，JNDI 等等，都是根据相应的策略提供 getObject()的实现。这里不做一一分析，
+		这已经不是 Spring 的核心功能，感兴趣的小伙可以再去深入研究*/
 public class AnnotationTestBeanFactory implements FactoryBean<FactoryCreatedAnnotationTestBean> {
 
 	private final FactoryCreatedAnnotationTestBean instance = new FactoryCreatedAnnotationTestBean();

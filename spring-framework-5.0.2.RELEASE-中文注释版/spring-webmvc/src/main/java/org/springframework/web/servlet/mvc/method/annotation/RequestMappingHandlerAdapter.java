@@ -734,6 +734,8 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 			if (session != null) {
 				Object mutex = WebUtils.getSessionMutex(session);
 				synchronized (mutex) {
+					/*通过上面的代码分析，已经可以找到处理 Request 的 Controller 中的方法了，现在看如
+					何解析该方法上的参数，并反射调用该方法。*/
 					mav = invokeHandlerMethod(request, response, handlerMethod);
 				}
 			}
@@ -795,6 +797,19 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	 * @since 4.2
 	 * @see #createInvocableHandlerMethod(HandlerMethod)
 	 */
+	/*invocableMethod.invokeAndHandle()最终要实现的目的就是：完成 Request 中的参
+	数和方法参数上数据的绑定。Spring MVC 中提供两种 Request 参数到方法中参数的绑
+	定方式：
+			1、通过注解进行绑定，@RequestParam。
+			2、通过参数名称进行绑定。
+	使用注解进行绑定，我们只要在方法参数前面声明@RequestParam("name")，就可以
+	将 request 中参数 name 的值绑定到方法的该参数上。使用参数名称进行绑定的前提是
+	必须要获取方法中参数的名称，Java 反射只提供了获取方法的参数的类型，并没有提供
+	获取参数名称的方法。SpringMVC 解决这个问题的方法是用 asm 框架读取字节码文件，
+	来获取方法的参数名称。asm 框架是一个字节码操作框架，关于 asm 更多介绍可以参考
+	其官网。个人建议，使用注解来完成参数绑定，这样就可以省去 asm 框架的读取字节码
+	的操作
+	*/
 	/** 获取处理请求的方法,执行并返回结果视图 **/
 	@Nullable
 	protected ModelAndView invokeHandlerMethod(HttpServletRequest request,

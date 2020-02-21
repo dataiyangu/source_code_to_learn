@@ -209,6 +209,7 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 	 * @see #loadBeanDefinitions(org.springframework.core.io.Resource)
 	 * @see #loadBeanDefinitions(org.springframework.core.io.Resource[])
 	 */
+	//一共有两种，这里看的第二种
 	public int loadBeanDefinitions(String location, @Nullable Set<Resource> actualResources) throws BeanDefinitionStoreException {
 		//获取在IoC容器初始化过程中设置的资源加载器
 		ResourceLoader resourceLoader = getResourceLoader();

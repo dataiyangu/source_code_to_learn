@@ -137,8 +137,14 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	public ClassPathXmlApplicationContext(
 			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)
 			throws BeansException {
+		//还有像 AnnotationConfigApplicationContext 、 FileSystemXmlApplicationContext 、
+		//XmlWebApplicationContext 等都继承自父容器 AbstractApplicationContext主要用到了装饰器模式
+		//和策略模式，最终都是调用 refresh()方法。
+		//注意这里的装饰器模式和策略模式。
 
+		//调用父类容器的构造方法(super(parent)方法)为容器设置好 Bean 资源加载器
 		super(parent);
+		// 设置 Bean 配置信息的定位路径
 		setConfigLocations(configLocations);
 		if (refresh) {
 			refresh();

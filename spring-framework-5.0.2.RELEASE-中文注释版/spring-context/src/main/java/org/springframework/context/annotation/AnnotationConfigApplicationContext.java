@@ -50,6 +50,16 @@ import java.util.function.Supplier;
  * @see ClassPathBeanDefinitionScanner
  * @see org.springframework.context.support.GenericXmlApplicationContext
  */
+
+
+		/*通过上面的源码分析，我们可以看啊到 Spring 对注解的处理分为两种方式：
+		1)、直接将注解 Bean 注册到容器中
+		可以在初始化容器时注册；也可以在容器创建之后手动调用注册方法向容器注册，然后通过手动刷新容
+		器，使得容器对注册的注解 Bean 进行处理。
+		2)、通过扫描指定的包及其子包下的所有类
+		在初始化注解容器时指定要自动扫描的路径，如果容器创建以后向给定路径动态添加了注解 Bean，则
+		需要手动调用容器扫描的方法，然后手动刷新容器，使得容器对所注册的 Bean 进行处理。
+		接下来，将会对两种处理方式详细分析其实现过程。*/
 public class AnnotationConfigApplicationContext extends GenericApplicationContext implements AnnotationConfigRegistry {
 
 	//保存一个读取注解的Bean定义读取器，并将其设置到容器中

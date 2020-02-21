@@ -258,6 +258,10 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 		}
 	}
 
+	/*BeanWrapperImpl 类主要是对容器中完成初始化的 Bean 实例对象进行属性的依赖注入，即把 Bean
+	对象设置到它所依赖的另一个 Bean 的属性中去。然而，BeanWrapperImpl 中的注入方法实际上由
+	AbstractNestablePropertyAccessor 来实现的，其相关源码如下：*/
+
 	//实现属性依赖注入功能
 	protected void setPropertyValue(PropertyTokenHolder tokens, PropertyValue pv) throws BeansException {
 		if (tokens.keys != null) {
@@ -267,6 +271,18 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 			processLocalProperty(tokens, pv);
 		}
 	}
+
+	/*通过对上面注入依赖代码的分析，我们已经明白了 Spring IOC 容器是如何将属性的值注入到 Bean 实
+	例对象中去的：
+			1)、对于集合类型的属性，将其属性值解析为目标类型的集合后直接赋值给属性。
+			2)、对于非集合类型的属性，大量使用了 JDK 的反射机制，通过属性的 getter()方法获取指定属性注入
+	以前的值，同时调用属性的 setter()方法为属性设置注入后的值。看到这里相信很多人都明白了 Spring
+	的 setter()注入原理。*/
+
+	/*至此 Spring IOC 容器对 Bean 定义资源文件的定位，载入、解析和依赖注入已经全部分析完毕，现在
+	Spring IOC 容器中管理了一系列靠依赖关系联系起来的 Bean，程序不需要应用自己手动创建所需的对
+	象，Spring IOC 容器会在我们使用的时候自动为我们创建，并且为我们注入好相关的依赖，这就是
+	Spring 核心功能的控制反转和依赖注入的相关功能。*/
 
 	//实现属性依赖注入功能
 	@SuppressWarnings("unchecked")

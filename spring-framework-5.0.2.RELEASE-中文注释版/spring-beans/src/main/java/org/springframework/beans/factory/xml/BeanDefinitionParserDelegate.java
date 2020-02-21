@@ -492,6 +492,9 @@ public class BeanDefinitionParserDelegate {
 
 		//这里只读取<Bean>元素中配置的class名字，然后载入到BeanDefinition中去
 		//只是记录配置的class名字，不做实例化，对象的实例化在依赖注入时完成
+		/*注意：在解析<Bean>元素过程中没有创建和实例化 Bean 对象，只是创建了 Bean 对象的定义类
+		BeanDefinition，将<Bean>元素中的配置信息设置到 BeanDefinition 中作为记录，当依赖注入时才
+		使用这些记录信息创建和实例化具体的 Bean 对象。*/
 		String className = null;
 
 		//如果<Bean>元素中配置了parent属性，则获取parent属性的值
@@ -523,6 +526,7 @@ public class BeanDefinitionParserDelegate {
 			//解析<Bean>元素的构造方法设置
 			parseConstructorArgElements(ele, bd);
 			//解析<Bean>元素的<property>设置
+			//因为spring中property属性用的比较多，这里着重看一下这里。
 			parsePropertyElements(ele, bd);
 			//解析<Bean>元素的qualifier属性
 			parseQualifierElements(ele, bd);
@@ -914,6 +918,12 @@ public class BeanDefinitionParserDelegate {
 	 */
 	//解析获取property值
 	@Nullable
+	/*通 过对上述源码的分析，我们可以了解在 Spring 配置文件中，<Bean>元素中<property>元素的相关
+	配置是如何处理的：
+			1、ref 被封装为指向依赖对象一个引用。
+			2、value 配置都会封装成一个字符串类型的对象。
+			3、ref 和 value 都通过“解析的数据类型属性值.setSource(extractSource(ele));”方法将属性值/引用
+			与所引用的属性关联起来*/
 	public Object parsePropertyValue(Element ele, BeanDefinition bd, @Nullable String propertyName) {
 		String elementName = (propertyName != null) ?
 						"<property> element for property '" + propertyName + "'" :
@@ -1056,6 +1066,12 @@ public class BeanDefinitionParserDelegate {
 		else if (nodeNameEquals(ele, ARRAY_ELEMENT)) {
 			return parseArrayElement(ele, bd);
 		}
+
+		/*通过上述源码分析，我们明白了在 Spring 配置文件中，对<property>元素中配置的 array、list、set、
+		map、prop 等各种集合子元素的都通过上述方法解析，生成对应的数据对象，比如 ManagedList、
+		ManagedArray、ManagedSet 等，这些 Managed 类是 Spring 对象 BeanDefiniton 的数据封装，对
+		集合数据类型的具体解析有各自的解析方法实现，解析方法的命名非常规范，一目了然，我们对<list>
+		集合元素的解析方法进行源码分析，了解其实现过程*/
 		//如果子元素是<list>，使用解析list集合子元素的方法解析
 		else if (nodeNameEquals(ele, LIST_ELEMENT)) {
 			return parseListElement(ele, bd);

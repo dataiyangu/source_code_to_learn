@@ -60,6 +60,14 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	}
 
 
+
+	/*通过这两个方法的源码我们可以看出，我们既可以使用一个字符串来配置多个 Spring Bean 配置信息，
+	也可以使用字符串数组，即下面两种方式都是可以的：
+	ClassPathResource res = new ClassPathResource("a.xml,b.xml");
+	多个资源文件路径之间可以是用” , ; \t\n”等分隔。
+	ClassPathResource res =new ClassPathResource(new String[]{"a.xml","b.xml"});
+	至此，SpringIOC 容器在初始化时将配置的 Bean 配置信息定位为 Spring 封装的 Resource*/
+
 	/**
 	 * Set the config locations for this application context in init-param style,
 	 * i.e. with distinct locations separated by commas, semicolons or whitespace.

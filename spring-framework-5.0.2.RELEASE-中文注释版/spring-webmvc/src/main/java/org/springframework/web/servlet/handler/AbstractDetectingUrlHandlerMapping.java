@@ -53,6 +53,10 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 	 * Calls the {@link #detectHandlers()} method in addition to the
 	 * superclass's initialization.
 	 */
+	/*接下来，我们来看url和Controller
+	的 关 系 是 如 何 建 立 的 呢 ？ HandlerMapping 的 子 类
+	AbstractDetectingUrlHandlerMapping 实现了 initApplicationContext()方法，所以
+	我们直接看子类中的初始化容器方法。*/
 	@Override
 	public void initApplicationContext() throws ApplicationContextException {
 		super.initApplicationContext();
@@ -83,6 +87,12 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 		// Take any bean name that we can determine URLs for.
 		// 遍历beanNames,并找到这些bean对应的url
 		for (String beanName : beanNames) {
+			/*determineUrlsForHandler(String beanName)方法的作用是获取每个 Controller 中的
+			url，不同的子类有不同的实现，这是一个典型的模板设计模式。因为开发中我们用的最
+			多 的 就 是 用 注 解 来 配 置 Controller 中 的 url ， BeanNameUrlHandlerMapping 是
+			AbstractDetectingUrlHandlerMapping 的子类,处理注解形式的 url 映射.所以我们这里
+			以 BeanNameUrlHandlerMapping 来 进 行 分 析 。 我 们 看
+			BeanNameUrlHandlerMapping 是如何查 beanName 上所有映射的 url*/
 			// 找bean上的所有url(controller上的url+方法上的url),该方法由对应的子类实现
 			String[] urls = determineUrlsForHandler(beanName);
 			if (!ObjectUtils.isEmpty(urls)) {

@@ -469,6 +469,9 @@ public class AdvisedSupport extends ProxyConfig implements Advised {
 		MethodCacheKey cacheKey = new MethodCacheKey(method);
 		List<Object> cached = this.methodCache.get(cacheKey);
 		if (cached == null) {
+			/*通过上面的源码我们可以看到，实际获取通知的实现逻辑其实是由 AdvisorChainFactory 的
+			getInterceptorsAndDynamicInterceptionAdvice()方法来完成的，且获取到的结果会被缓存。下面来
+			分析 getInterceptorsAndDynamicInterceptionAdvice()方法的实现：*/
 			cached = this.advisorChainFactory.getInterceptorsAndDynamicInterceptionAdvice(
 					this, method, targetClass);
 			this.methodCache.put(cacheKey, cached);

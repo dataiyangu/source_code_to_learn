@@ -306,14 +306,18 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	/**
 	 * Look up a handler method for the given request.
 	 */
+	/*整个处理过程中最核心的逻辑其实就是拼接 Controller 的 url 和方法的 url，与 Request
+	的 url 进行匹配，找到匹配的方法。*/
 	@Override
 	protected HandlerMethod getHandlerInternal(HttpServletRequest request) throws Exception {
+		// 如果请求 url 为,http://localhost:8080/web/hello.json, 则 lookupPath=web/hello.json
 		String lookupPath = getUrlPathHelper().getLookupPathForRequest(request);
 		if (logger.isDebugEnabled()) {
 			logger.debug("Looking up handler method for path " + lookupPath);
 		}
 		this.mappingRegistry.acquireReadLock();
 		try {
+			// 遍历 Controller 上的所有方法,获取 url 匹配的方法
 			HandlerMethod handlerMethod = lookupHandlerMethod(lookupPath, request);
 			if (logger.isDebugEnabled()) {
 				if (handlerMethod != null) {

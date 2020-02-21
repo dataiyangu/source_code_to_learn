@@ -46,6 +46,7 @@ public class MethodBeforeAdviceInterceptor implements MethodInterceptor, Seriali
 		this.advice = advice;
 	}
 
+	/*可以看到，invoke 方法中，首先触发了 advice 的 before 回调，然后才是 proceed*/
 	@Override
 	public Object invoke(MethodInvocation mi) throws Throwable {
 		this.advice.before(mi.getMethod(), mi.getArguments(), mi.getThis() );

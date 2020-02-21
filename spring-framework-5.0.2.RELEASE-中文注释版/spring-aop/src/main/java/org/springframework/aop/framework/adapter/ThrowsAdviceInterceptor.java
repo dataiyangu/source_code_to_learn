@@ -52,6 +52,7 @@ import org.springframework.util.Assert;
  * @author Rod Johnson
  * @author Juergen Hoeller
  */
+/*再看下ThrowsAdviceInterceptor源码，也都大同小异*/
 public class ThrowsAdviceInterceptor implements MethodInterceptor, AfterAdvice {
 
 	private static final String AFTER_THROWING = "afterThrowing";

@@ -33,6 +33,7 @@ import org.springframework.util.Assert;
  * @author Rod Johnson
  */
 @SuppressWarnings("serial")
+/*看了之前的MethodBeforeAdviceAdapter，再看下AfterReturningAdviceInterceptor*/
 public class AfterReturningAdviceInterceptor implements MethodInterceptor, AfterAdvice, Serializable {
 
 	private final AfterReturningAdvice advice;

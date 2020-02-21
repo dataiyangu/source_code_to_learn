@@ -168,6 +168,8 @@ public class DefaultResourceLoader implements ResourceLoader {
 				// No URL -> resolve as resource path.
 				//如果既不是classpath标识，又不是URL标识的Resource定位，则调用
 				//容器本身的getResourceByPath方法获取Resource
+				//模板模式，在 Spring 中我们看到它提供的各种资源抽象，比如
+				// ClassPathResource、URLResource、FileSystemResource 等来供我们使用。上面我们看到的是定位
 				return getResourceByPath(location);
 			}
 		}

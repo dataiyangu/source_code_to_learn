@@ -52,6 +52,11 @@ public class DefaultAdvisorChainFactory implements AdvisorChainFactory, Serializ
 	 * 则判断此Advisor能否应用到目标类targetClass上.如果是PointcutAdvisor,则判断
 	 * 此Advisor能否应用到目标方法method上.将满足条件的Advisor通过AdvisorAdaptor转化成Interceptor列表返回.
 	 */
+
+	/*在为 AopProxy 代理对象配置拦截器的实现中，有一个取得拦截器的配置过程，这个过
+	程是由 DefaultAdvisorChainFactory 实现的，这个工厂类负责生成拦截器链，在它的
+	getInterceptorsAndDynamicInterceptionAdvice 方法中，有一个适配器和注册过程，
+	通过配置 Spring 预先设计好的拦截器，Spring 加入了它对 AOP 实现的处理*/
 	@Override
 	public List<Object> getInterceptorsAndDynamicInterceptionAdvice(
 			Advised config, Method method, @Nullable Class<?> targetClass) {

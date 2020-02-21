@@ -42,6 +42,8 @@ class MethodBeforeAdviceAdapter implements AdvisorAdapter, Serializable {
 	@Override
 	public MethodInterceptor getInterceptor(Advisor advisor) {
 		MethodBeforeAdvice advice = (MethodBeforeAdvice) advisor.getAdvice();
+		/*Spring AOP 为了实现 advice 的织入，设计了特定的拦截器对这些功能进行了封装。我
+		们接着看 MethodBeforeAdviceInterceptor 如何完成封装的？*/
 		return new MethodBeforeAdviceInterceptor(advice);
 	}
 

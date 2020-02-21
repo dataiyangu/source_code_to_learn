@@ -141,23 +141,42 @@ public class InvocableHandlerMethod extends HandlerMethod {
 		return returnValue;
 	}
 
+	/*Spring MVC 中提供两种 Request 参数到方法中参数的绑
+	定方式：
+			1、通过注解进行绑定，@RequestParam。
+			2、通过参数名称进行绑定。
+	使用注解进行绑定，我们只要在方法参数前面声明@RequestParam("name")，就可以
+	将 request 中参数 name 的值绑定到方法的该参数上。使用参数名称进行绑定的前提是
+	必须要获取方法中参数的名称，Java 反射只提供了获取方法的参数的类型，并没有提供
+	获取参数名称的方法。SpringMVC 解决这个问题的方法是用 asm 框架读取字节码文件，
+	来获取方法的参数名称。asm 框架是一个字节码操作框架，关于 asm 更多介绍可以参考
+	其官网。个人建议，使用注解来完成参数绑定，这样就可以省去 asm 框架的读取字节码
+	的操作*/
+
+	/*到这里,方法的参数值列表也获取到了,就可以直接进行方法的调用了。整个请求过程
+	中最复杂的一步就是在这里了。到这里整个请求处理过程的关键步骤都已了解。理解了
+	Spring MVC 中的请求处理流程,整个代码还是比较清晰的。*/
 	/**
 	 * Get the method argument values for the current request.
 	 */
 	private Object[] getMethodArgumentValues(NativeWebRequest request, @Nullable ModelAndViewContainer mavContainer,
 			Object... providedArgs) throws Exception {
-
+		//获取所有执行的方法的参数信息
 		MethodParameter[] parameters = getMethodParameters();
 		Object[] args = new Object[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
 			MethodParameter parameter = parameters[i];
 			parameter.initParameterNameDiscovery(this.parameterNameDiscoverer);
+			//如果之前有预先设置值的话，则取预先设置好的值
 			args[i] = resolveProvidedArgument(parameter, providedArgs);
 			if (args[i] != null) {
 				continue;
 			}
+			//获取能解析出方法参数值的参数解析器类
 			if (this.argumentResolvers.supportsParameter(parameter)) {
 				try {
+					//解析出参数值（没有注解的）
+					//文章参考：https://blog.csdn.net/zknxx/article/details/78239951?locationNum=10&fps=1
 					args[i] = this.argumentResolvers.resolveArgument(
 							parameter, mavContainer, request, this.dataBinderFactory);
 					continue;
@@ -169,6 +188,7 @@ public class InvocableHandlerMethod extends HandlerMethod {
 					throw ex;
 				}
 			}
+			//如果没有能解析方法参数的类，抛出异
 			if (args[i] == null) {
 				throw new IllegalStateException("Could not resolve method parameter at index " +
 						parameter.getParameterIndex() + " in " + parameter.getExecutable().toGenericString() +

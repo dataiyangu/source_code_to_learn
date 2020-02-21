@@ -56,7 +56,8 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 		return currentlyInvokedFactoryMethod.get();
 	}
 
-
+	/*我们看到了如果 Bean 有方法被覆盖了，则使用 JDK 的反射机制进行实例化，否
+	则，使用 CGLib 进行实例化*/
 	//使用初始化策略实例化Bean对象
 	@Override
 	public Object instantiate(RootBeanDefinition bd, @Nullable String beanName, BeanFactory owner) {
@@ -96,6 +97,7 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 		else {
 			// Must generate CGLIB subclass.
 			//使用CGLIB来实例化对象
+			//这里不是调用的当前类的这个方法，而是被继承的子类的方法
 			return instantiateWithMethodInjection(bd, beanName, owner);
 		}
 	}
@@ -105,6 +107,9 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 	 * UnsupportedOperationException, if they can instantiate an object with
 	 * the Method Injection specified in the given RootBeanDefinition.
 	 * Instantiation should use a no-arg constructor.
+	 */
+	/** 子类可以重写此方法，如果子类可以使用给定RootBeanDefinition中指定的方法注入实例化对象，
+	 * 则该方法将引发UnsupportedOperationException。实例化应使用无参数构造函数。
 	 */
 	protected Object instantiateWithMethodInjection(RootBeanDefinition bd, @Nullable String beanName, BeanFactory owner) {
 		throw new UnsupportedOperationException("Method Injection not supported in SimpleInstantiationStrategy");

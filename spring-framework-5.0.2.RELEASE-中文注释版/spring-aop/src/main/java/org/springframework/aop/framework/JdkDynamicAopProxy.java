@@ -112,6 +112,10 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 		return getProxy(ClassUtils.getDefaultClassLoader());
 	}
 
+	/*上面我们已经了解到 Spring 提供了两种方式来生成代理方式有 JDKProxy 和 CGLib。下面我们来研究
+	一下 Spring 如何使用 JDK 来生成代理对象，具体的生成代码放在 JdkDynamicAopProxy 这个类中，
+	直接上相关代码：*/
+
 	/**
 	 * 获取代理类要实现的接口,除了Advised对象中配置的,还会加上SpringProxy, Advised(opaque=false)
 	 * 检查上面得到的接口中有没有定义 equals或者hashcode的接口
@@ -125,6 +129,11 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(this.advised, true);
 		findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);
 		return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);
+		/*通过注释我们应该已经看得非常明白代理对象的生成过程，此处不再赘述。下面的问题是，代理对象生
+		成了，那切面是如何织入的？
+		我们知道 InvocationHandler 是 JDK 动态代理的核心，生成的代理对象的方法调用都会委托到
+		InvocationHandler.invoke()方法。而从 JdkDynamicAopProxy 的源码我们可以看到这个类其实也实
+		现了 InvocationHandler，下面我们分析 Spring AOP 是如何织入切面的，直接上源码看当前类的invoke()方法：*/
 	}
 
 	/**
@@ -201,6 +210,11 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			target = targetSource.getTarget();
 			Class<?> targetClass = (target != null ? target.getClass() : null);
 
+			/*主要实现思路可以简述为：首先获取应用到此方法上的通知链（Interceptor Chain）。如果有通知，则
+			应用通知，并执行 JoinPoint；如果没有通知，则直接反射执行 JoinPoint。而这里的关键是通知链是如
+			何获取的以及它又是如何执行的呢？现在来逐一分析。首先，从上面的代码可以看到，通知链是通过
+			Advised.getInterceptorsAndDynamicInterceptionAdvice()这个方法来获取的，我们来看下这个方法
+			的实现逻辑：*/
 			// Get the interception chain for this method.
 			//获取可以应用到此方法上的Interceptor列表
 			List<Object> chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);
@@ -219,6 +233,8 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 				// We need to create a method invocation...
 				//创建MethodInvocation
 				invocation = new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
+				/*从 这 段 代 码 可 以 看 出 ， 如 果 得 到 的 拦 截 器 链 为 空 ， 则 直 接 反 射 调 用 目 标 方 法 ， 否 则 创 建
+				MethodInvocation，调用其 proceed()方法，触发拦截器链的执行，来看下具体代码:*/
 				// Proceed to the joinpoint through the interceptor chain.
 				retVal = invocation.proceed();
 			}

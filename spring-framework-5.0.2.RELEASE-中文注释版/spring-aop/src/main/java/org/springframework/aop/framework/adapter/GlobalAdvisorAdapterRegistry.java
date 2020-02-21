@@ -29,6 +29,8 @@ public abstract class GlobalAdvisorAdapterRegistry {
 	/**
 	 * Keep track of a single instance so we can return it to classes that request it.
 	 */
+	/*而 GlobalAdvisorAdapterRegistry 起到了适配器和单例模式的作用，提供了一个 DefaultAdvisorAdapterRegistry，
+	它用来完成各种通知的适配和注册过程*/
 	private static AdvisorAdapterRegistry instance = new DefaultAdvisorAdapterRegistry();
 
 	/**

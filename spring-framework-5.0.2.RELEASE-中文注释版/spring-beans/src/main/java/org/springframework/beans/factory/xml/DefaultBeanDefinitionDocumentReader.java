@@ -217,6 +217,14 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		}
 		//元素节点既不是导入元素，也不是别名元素，即普通的<Bean>元素，
 		//按照Spring的Bean规则解析元素
+
+		/*我们使用 Spring 时，在
+		Spring 配置文件中可以使用<import>元素来导入 IOC 容器所需要的其他资源，Spring IOC 容器在解
+		析时会首先将指定导入的资源加载进容器中。使用<ailas>别名时，Spring IOC 容器首先将别名元素所
+		定义的别名注册到容器中。
+		对于既不是<import>元素，又不是<alias>元素的元素，即 Spring 配置文件中普通的<bean>元素的
+		解析由 BeanDefinitionParserDelegate 类的 parseBeanDefinitionElement()方法来实现。这个解析的
+		过程非常复杂*/
 		else if (delegate.nodeNameEquals(ele, BEAN_ELEMENT)) {
 			processBeanDefinition(ele, delegate);
 		}
@@ -360,6 +368,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			try {
 				// Register the final decorated instance.
 				//向Spring IOC容器注册解析得到的Bean定义，这是Bean定义向IOC容器注册的入口
+				//上面解析完了之后我们接着回来看，进行注册。
 				BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());
 			}
 			catch (BeanDefinitionStoreException ex) {

@@ -186,6 +186,10 @@ public class AnnotationConfigWebApplicationContext extends AbstractRefreshableWe
 	 * @see AnnotatedBeanDefinitionReader
 	 * @see ClassPathBeanDefinitionScanner
 	 */
+	/*AnnotationConfigWebApplicationContext 是 AnnotationConfigApplicationContext 的 Web 版，
+	它们对于注解 Bean 的注册和扫描是基本相同的，但是 AnnotationConfigWebApplicationContext
+	对注解 Bean 定义的载入稍有不同，AnnotationConfigWebApplicationContext 注入注解 Bean 定义
+	源码如下：*/
 	//载入注解Bean定义资源
 	@Override
 	protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) {

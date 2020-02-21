@@ -516,6 +516,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.applicationListeners;
 	}
 
+	/*	SpringIOC 容器对 Bean 配置资源的载入是从 refresh()函数开始的，refresh()是一个模板方法，规定了
+	IOC 容 器 的 启 动 流 程 ， 有 些 逻 辑 要 交 给 其 子 类 去 实 现 。 它 对 Bean 配 置 资 源 进 行 载 入
+	ClassPathXmlApplicationContext 通过调用其父类 AbstractApplicationContext 的 refresh()函数启
+	动整个 IOC 容器对 Bean 定义的载入过程*/
+
+
+	/*refresh()方法的主要作用是：在创建 IOC 容器前，如果已经有容器存在，则需要把已有的容器销毁和
+	关闭，以保证在 refresh 之后使用的是新建立起来的 IOC 容器。它类似于对 IOC 容器的重启，在新建立
+	好的容器中对容器进行初始化，对 Bean 配置资源进行载入*/
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
@@ -526,6 +535,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			// Tell the subclass to refresh the internal bean factory.
 			//2、告诉子类启动refreshBeanFactory()方法，Bean定义资源文件的载入从
 			//子类的refreshBeanFactory()方法启动
+
+			/*refresh()方法主要为 IOC 容器 Bean 的生命周期管理提供条件，Spring IOC 容器载入 Bean 配置信息
+			从 其 子 类 容 器 的 refreshBeanFactory() 方 法 启 动 ， 所 以 整 个 refresh() 中
+			“ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();”这句以后代码的
+			都是注册容器的信息源和生命周期事件，我们前面说的载入就是从这句代码开始启动。*/
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
@@ -562,6 +576,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				//10、为事件传播器注册事件监听器.
 				registerListeners();
 
+				/*在refresh()方法中 ConfigurableListableBeanFactorybeanFactory = obtainFreshBeanFactory();启
+				动了 Bean 定义资源的载入、注册过程，而 finishBeanFactoryInitialization 方法是对注册后的 Bean
+				定义中的预实例化(lazy-init=false,Spring 默认就是预实例化,即为 true)的 Bean 进行处理的地方。*/
 				// Instantiate all remaining (non-lazy-init) singletons.
 				//11、初始化所有剩余的单例Bean
 				finishBeanFactoryInitialization(beanFactory);
@@ -612,14 +629,19 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Initialize any placeholder property sources in the context environment
+		//在上下文环境中初始化任何占位符属性源
 		initPropertySources();
 
 		// Validate that all properties marked as required are resolvable
 		// see ConfigurablePropertyResolver#setRequiredProperties
+		//验证所有标记为需要的属性都是可解析的
+		//看到ConfigurablePropertyResolver # setRequiredProperties
 		getEnvironment().validateRequiredProperties();
 
 		// Allow for the collection of early ApplicationEvents,
 		// to be published once the multicaster is available...
+		//允许收集早期的ApplicationEvents，
+		//一旦多播机可用，就会发布…
 		this.earlyApplicationEvents = new LinkedHashSet<>();
 	}
 
@@ -640,6 +662,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
 		//这里使用了委派设计模式，父类定义了抽象的refreshBeanFactory()方法，具体实现调用子类容器的refreshBeanFactory()方法
+
+		// 1、策略模式是委派模式内部的一种实现形式，策略模式关注的结果是否能相互替代。
+		// 2、委派模式更关注分发和调度的过程
 		refreshBeanFactory();
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 		if (logger.isDebugEnabled()) {
@@ -860,6 +885,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Finish the initialization of this context's bean factory,
 	 * initializing all remaining singleton beans.
 	 */
+	/*当 Bean 定义资源被载入 IOC 容器之后，容器将 Bean 定义资源解析为容器内部的数据结构
+	BeanDefinition 注册到容器中，AbstractApplicationContext 类中的 finishBeanFactoryInitialization()
+	方法对配置了预实例化属性的 Bean 进行预初始化过程，源码如下：*/
 	//对配置了lazy-init属性的Bean进行预实例化处理
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// Initialize conversion service for this context.
@@ -892,6 +920,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		//缓存容器中所有注册的BeanDefinition元数据，以防被修改
 		beanFactory.freezeConfiguration();
 
+		/*ConfigurableListableBeanFactory 是 一 个 接 口 ， 其 preInstantiateSingletons() 方 法 由 其 子 类
+		DefaultListableBeanFactory 提供*/
 		// Instantiate all remaining (non-lazy-init) singletons.
 		//对配置了lazy-init属性的单态模式Bean进行预实例化处理
 		beanFactory.preInstantiateSingletons();
@@ -1328,7 +1358,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	//---------------------------------------------------------------------
 	// Implementation of ResourcePatternResolver interface
 	//---------------------------------------------------------------------
-
+	//载入资源
 	@Override
 	public Resource[] getResources(String locationPattern) throws IOException {
 		return this.resourcePatternResolver.getResources(locationPattern);

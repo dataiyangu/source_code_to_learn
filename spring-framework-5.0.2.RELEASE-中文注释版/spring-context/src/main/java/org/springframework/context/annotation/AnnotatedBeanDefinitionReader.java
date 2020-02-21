@@ -238,6 +238,9 @@ public class AnnotatedBeanDefinitionReader {
 		//如果在向容器注册注解Bean定义时，使用了额外的限定符注解，则解析限定符注解。
 		//主要是配置的关于autowiring自动依赖注入装配的限定条件，即@Qualifier注解
 		//Spring自动依赖注入装配默认是按类型装配，如果使用@Qualifier则按名称
+		// 关于@QUalifier的解释：https://blog.csdn.net/qq_36567005/article/details/80611139
+		// Qualifier的意思是合格者，通过这个标示，表明了哪个实现类才是我们所需要的，添加@Qualifier注解，
+		// 需要注意的是@Qualifier的参数名称为我们之前定义@Service注解的名称之一。
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
 				//如果配置了@Primary注解，设置该Bean为autowiring自动依赖注入装//配时的首选

@@ -123,6 +123,8 @@ public interface BeanFactory {
 	 */
 	//对FactoryBean的转义定义，因为如果使用bean的名字检索FactoryBean得到的对象是工厂生成的对象，
 	//如果需要得到工厂本身，需要转义
+	//BeanFactory的getBean方法可以获取普通的bean，但是FactoryBean的getBean获取的是FactoryBean这个工厂
+	//生产的bean，如果希望获得FactoryBean本身的话，就需要加上前缀"&"
 	String FACTORY_BEAN_PREFIX = "&";
 
 

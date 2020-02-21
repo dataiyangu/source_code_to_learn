@@ -164,7 +164,9 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 	 */
 	private NamedValueInfo updateNamedValueInfo(MethodParameter parameter, NamedValueInfo info) {
 		String name = info.name;
+		//如果上一步创建的NamedValueInfo中的name为空的话，
 		if (info.name.isEmpty()) {
+			//从MethodParameter中解析出参数的名字
 			name = parameter.getParameterName();
 			if (name == null) {
 				throw new IllegalArgumentException(

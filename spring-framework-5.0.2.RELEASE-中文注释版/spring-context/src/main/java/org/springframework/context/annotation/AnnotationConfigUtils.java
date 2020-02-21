@@ -275,6 +275,9 @@ public class AnnotationConfigUtils {
 		}
 	}
 
+	/*AnnotationConfigUtils 类的 applyScopedProxyMode()方法根据注解 Bean 定义类中配置的作用域
+		@Scope 注解的值，为 Bean 定义应用相应的代理模式，主要是在 Spring 面向切面编程(AOP)中使用。
+		源码如下：*/
 	//根据作用域为Bean应用引用的代码模式
 	static BeanDefinitionHolder applyScopedProxyMode(
 			ScopeMetadata metadata, BeanDefinitionHolder definition, BeanDefinitionRegistry registry) {

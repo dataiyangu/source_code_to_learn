@@ -144,6 +144,29 @@ import java.util.*;
  * @see org.springframework.web.context.ContextLoaderListener
  */
 @SuppressWarnings("serial")
+/*
+Spring MVC 使用优化建议
+		上面我们已经对 SpringMVC 的工作原理和源码进行了分析，在这个过程发现了几个优化
+		点:
+		1、Controller 如果能保持单例，尽量使用单例
+		这样可以减少创建对象和回收对象的开销。也就是说，如果 Controller 的类变量和实例
+		变量可以以方法形参声明的尽量以方法的形参声明，不要以类变量和实例变量声明，这
+		样可以避免线程安全问题。
+		ps:也就是说不要声明在类中，声明在方法中.一个例子：https://blog.csdn.net/xiejx618/article/details/10043039
+		2、处理 Request 的方法中的形参务必加上@RequestParam 注解
+		这样可以避免 Spring MVC 使用 asm 框架读取 class 文件获取方法参数名的过程。即便
+		Spring MVC 对读取出的方法参数名进行了缓存，如果不要读取 class 文件当然是更好。
+		3、缓存 URL
+		阅读源码的过程中，我们发现 Spring MVC 并没有对处理 url 的方法进行缓存，也就是
+		说每次都要根据请求 url 去匹配 Controller 中的方法 url，如果把 url 和 Method 的关系
+		缓存起来，会不会带来性能上的提升呢？有点恶心的是，负责解析 url 和 Method 对应
+		关系的 ServletHandlerMethodResolver 是一个 private 的内部类，不能直接继承该类
+		增强代码，必须要该代码后重新编译。当然，如果缓存起来，必须要考虑缓存的线程安
+		全问题。
+*/
+
+//======SpringMVC
+//======IOC容器初体验======
 public class DispatcherServlet extends FrameworkServlet {
 
 	/** Well-known name for the MultipartResolver object in the bean factory for this namespace. */
@@ -474,6 +497,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	/**
 	 * This implementation calls {@link #initStrategies}.
 	 */
+	//前面的章节已经知道最终会调用refresh方法，这里不再赘述
 	@Override
 	protected void onRefresh(ApplicationContext context) {
 		initStrategies(context);
@@ -483,6 +507,10 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * Initialize the strategy objects that this servlet uses.
 	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
 	 */
+	/*到这一步就完成了Spring MVC的九大组件的初始化。接下来，我们来看url和Controller
+	的 关 系 是 如 何 建 立 的 呢 ？ HandlerMapping 的 子 类
+	AbstractDetectingUrlHandlerMapping 实现了 initApplicationContext()方法，所以
+	我们直接看子类中的初始化容器方法*/
 	//初始化策略
 	protected void initStrategies(ApplicationContext context) {
 		//多文件上传的组件
@@ -883,6 +911,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * Exposes the DispatcherServlet-specific request attributes and delegates to {@link #doDispatch}
 	 * for the actual dispatching.
 	 */
+
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if (logger.isDebugEnabled()) {
@@ -921,6 +950,8 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 
 		try {
+			/*这一步步是由请求触发的，所以入口为 DispatcherServlet 的核心方法为 doService()，
+			doService()中的核心逻辑由 doDispatch()实现，源代码如下：*/
 			doDispatch(request, response);
 		}
 		finally {
@@ -961,6 +992,10 @@ public class DispatcherServlet extends FrameworkServlet {
 				processedRequest = checkMultipart(request);
 				multipartRequestParsed = (processedRequest != request);
 
+				/*getHandler(processedRequest)方法实际上就是从 HandlerMapping 中找到 url 和
+				Controller 的对应关系。也就是 Map<url,Controller>。我们知道，最终处理 Request
+				的是 Controller 中的方法，我们现在只是知道了 Controller，我们如何确认 Controller
+				中处理 Request 的方法呢？继续往下看*/
 				// Determine handler for the current request.
 				// 2.取得处理当前请求的controller,这里也称为hanlder,处理器,
 				// 	 第一个步骤的意义就在这里体现了.这里并不是直接返回controller,
@@ -994,7 +1029,10 @@ public class DispatcherServlet extends FrameworkServlet {
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
-
+				/*从Map<urls,beanName>中取得 Controller 后，经过拦截器的预处理方法，再通过反
+				射获取该方法上的注解和参数，解析方法和参数上的注解，然后反射调用方法获取
+				ModelAndView 结果视图。最后，调用的就是 RequestMappingHandlerAdapter 的
+				handle()中的核心逻辑由 handleInternal(request, response, handler)实现。*/
 				// Actually invoke the handler.
 				// 4.实际的处理器处理请求,返回结果视图对象
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());

@@ -396,6 +396,15 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 * @param beanName the name of the bean
 	 * @param dependentBeanName the name of the dependent bean
 	 */
+	/*通过对 autowiring 的源码分析，我们可以看出，autowiring 的实现过程：
+	a、对 Bean 的属性代调用 getBean()方法，完成依赖 Bean 的初始化和依赖注入。
+	b、将依赖 Bean 的属性引用设置到被依赖的 Bean 属性上。
+	c、将依赖 Bean 的名称和被依赖 Bean 的名称存储在 IOC 容器的集合中。
+	Spring IOC 容器的 autowiring 属性自动依赖注入是一个很方便的特性，可以简化开发时的配置，但是
+	凡是都有两面性，自动属性依赖注入也有不足，首先，Bean 的依赖关系在 配置文件中无法很清楚地看
+	出来，对于维护造成一定困难。其次，由于自动依赖注入是 Spring 容器自动执行的，容器是不会智能
+	判断的，如果配置不当，将会带来无法预料的后果，所以自动依赖注入特性在使用时还是综合考虑。*/
+
 	//为指定的Bean注入依赖的Bean
 	public void registerDependentBean(String beanName, String dependentBeanName) {
 		// A quick check for an existing entry upfront, avoiding synchronization...

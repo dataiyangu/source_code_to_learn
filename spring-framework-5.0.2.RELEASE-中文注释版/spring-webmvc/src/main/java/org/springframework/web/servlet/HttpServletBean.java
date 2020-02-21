@@ -171,6 +171,7 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		}
 
 		// Let subclasses do whatever initialization they like.
+		//真正完成初始化动作的在这里完成。
 		initServletBean();
 
 		if (logger.isDebugEnabled()) {

@@ -56,6 +56,7 @@ import java.util.Set;
  * @see org.springframework.stereotype.Service
  * @see org.springframework.stereotype.Controller
  */
+/*依次往下看这个类吧~*/
 public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateComponentProvider {
 
 	private final BeanDefinitionRegistry registry;

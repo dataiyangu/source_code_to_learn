@@ -40,7 +40,19 @@ import org.springframework.lang.Nullable;
  * @see ConfigurableBeanFactory#addBeanPostProcessor
  * @see BeanFactoryPostProcessor
  */
+
+		/*Spring 的 AOP 是通过接入 BeanPostProcessor 后置处理器开始的，它是 Spring IOC 容器经常使用到
+		的一个特性，这个 Bean 后置处理器是一个监听器，可以监听容器触发的 Bean 声明周期事件。后置处
+		理器向容器注册以后，容器中管理的 Bean 就具备了接收 IOC 容器事件回调的能力。
+		BeanPostProcessor 的使用非常简单，只需要提供一个实现接口 BeanPostProcessor 的实现类，然后
+		在 Bean 的配置文件中设置即可*/
+
+		/*简单看下这个接口*/
+
 public interface BeanPostProcessor {
+
+	/*这两个回调的入口都是和容器管理的 Bean 的生命周期事件紧密相关，可以为用户提供在 Spring IOC
+	容器初始化 Bean 过程中自定义的处理操作。*/
 
 	/**
 	 * Apply this BeanPostProcessor to the given new bean instance <i>before</i> any bean

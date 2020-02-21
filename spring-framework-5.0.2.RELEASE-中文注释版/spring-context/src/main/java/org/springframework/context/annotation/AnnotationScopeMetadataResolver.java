@@ -101,6 +101,8 @@ public class AnnotationScopeMetadataResolver implements ScopeMetadataResolver {
 		}
 		//返回解析的作用域元信息对象
 		return metadata;
+		// 上述代码中的 annDef.getMetadata().getAnnotationAttributes()方法就是获取对象中指定类型的注
+		// 解的值。
 	}
 
 }

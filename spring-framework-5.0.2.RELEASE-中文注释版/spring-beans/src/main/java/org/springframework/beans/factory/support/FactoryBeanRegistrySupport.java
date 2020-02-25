@@ -97,7 +97,7 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 	产 Bean 实例对象。
 	Dereference(解引用)：一个在 C/C++中应用比较多的术语，在 C++中，”*”是解引用符号，而”&”
 	是引用符号，解引用是指变量指向的是所引用对象的本身数据，而不是引用对象的内存地址*/
-
+	/*AbstractBeanFactory 类中生产 Bean 实例对象的主要源码如下：*/
 	//Bean工厂生产Bean实例对象
 	protected Object getObjectFromFactoryBean(FactoryBean<?> factory, String beanName, boolean shouldPostProcess) {
 		//Bean工厂是单态模式，并且Bean工厂缓存中存在指定名称的Bean实例对象

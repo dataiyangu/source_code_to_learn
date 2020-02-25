@@ -297,6 +297,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	 * @see #getAdvicesAndAdvisorsForBean
 	 */
 	@Override
+	/*进入 postProcessAfterInitialization()方法，我们发现调到了一个非常核心的方法 wrapIfNecessary()，
+	其源码如下：*/
 	public Object postProcessAfterInitialization(@Nullable Object bean, String beanName) throws BeansException {
 		if (bean != null) {
 			Object cacheKey = getCacheKey(bean.getClass(), beanName);
@@ -479,7 +481,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		if (advisorsPreFiltered()) {
 			proxyFactory.setPreFiltered(true);
 		}
-
+		/*整 个过程跟下来，我发现最终调用的是 proxyFactory.getProxy()方法。到这里我们大概能够猜到
+		proxyFactory 有 JDK 和 CGLib 的，那么我们该如何选择呢？最终调用的是 DefaultAopProxyFactory
+		的 createAopProxy()方法：*/
 		return proxyFactory.getProxy(getProxyClassLoader());
 	}
 

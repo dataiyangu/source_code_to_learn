@@ -176,7 +176,7 @@ public class InvocableHandlerMethod extends HandlerMethod {
 			if (this.argumentResolvers.supportsParameter(parameter)) {
 				try {
 					//解析出参数值（没有注解的）
-					//文章参考：https://blog.csdn.net/zknxx/article/details/78239951?locationNum=10&fps=1
+					//文章参考：https://www.jianshu.com/p/f569c5705e8a
 					args[i] = this.argumentResolvers.resolveArgument(
 							parameter, mavContainer, request, this.dataBinderFactory);
 					continue;

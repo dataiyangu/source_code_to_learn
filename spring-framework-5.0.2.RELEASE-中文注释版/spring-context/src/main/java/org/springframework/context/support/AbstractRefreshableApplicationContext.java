@@ -120,6 +120,11 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	 * bean factory, shutting down the previous bean factory (if any) and
 	 * initializing a fresh bean factory for the next phase of the context's lifecycle.
 	 */
+	/*AbstractApplicationContext 类中只抽象定义了 refreshBeanFactory()方法， 容器真正调用的是
+	其子类 AbstractRefreshableApplicationContext 实现的 refreshBeanFactory()方法， 方法的源
+	码如下：*/
+	/*在这个方法中，先判断 BeanFactory 是否存在，如果存在则先销毁 beans 并关闭 beanFactory，接着
+	创建 DefaultListableBeanFactory，并调用 loadBeanDefinitions(beanFactory)装载 bean 定义*/
 	@Override
 	protected final void refreshBeanFactory() throws BeansException {
 		//如果已经有容器，销毁容器中的bean，关闭容器

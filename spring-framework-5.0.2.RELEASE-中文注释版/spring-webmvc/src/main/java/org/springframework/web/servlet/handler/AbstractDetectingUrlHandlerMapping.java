@@ -114,7 +114,7 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 	 * @param beanName the name of the candidate bean
 	 * @return the URLs determined for the bean, or an empty array if none
 	 */
-	/** 获取controller中所有方法的url,由子类实现,典型的模板模式 **/
+	/** 获取controller中所有方法的url,由子类实现,典型的模板模式 ,虽然这里我只看到了一个子类**/
 	protected abstract String[] determineUrlsForHandler(String beanName);
 
 }

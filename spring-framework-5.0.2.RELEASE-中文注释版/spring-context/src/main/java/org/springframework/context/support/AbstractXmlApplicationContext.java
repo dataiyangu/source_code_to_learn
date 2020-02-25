@@ -77,6 +77,12 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * @see #initBeanDefinitionReader
 	 * @see #loadBeanDefinitions
 	 */
+	/*AbstractRefreshableApplicationContext 中只定义了抽象的 loadBeanDefinitions 方法，容器真正调
+	用的是其子类 AbstractXmlApplicationContext 对该方法的实现，AbstractXmlApplicationContext
+	的主要源码如下：
+	loadBeanDefinitions() 方 法 同 样 是 抽 象 方 法 ， 是 由 其 子 类 实 现 的 ， 也 即 在
+	AbstractXmlApplicationContext 中。*/
+
 	//实现父类抽象的载入Bean定义方法
 	@Override
 	protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException {
@@ -125,6 +131,10 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * @see #getResources
 	 * @see #getResourcePatternResolver
 	 */
+	/*以XmlBean 读取器的其中一种策略 XmlBeanDefinitionReader 为例。XmlBeanDefinitionReader 调
+	用其父类AbstractBeanDefinitionReader的 reader.loadBeanDefinitions()方法读取Bean配置资源。
+	由于我们使用 ClassPathXmlApplicationContext 作为例子分析，因此 getConfigResources 的返回值
+	为 null，因此程序执行 reader.loadBeanDefinitions(configLocations)分支*/
 	//Xml Bean读取器加载Bean定义资源
 	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansException, IOException {
 		//获取Bean定义资源的定位

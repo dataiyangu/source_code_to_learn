@@ -141,6 +141,13 @@ public class BeanDefinitionReaderUtils {
 	 * @param registry the bean factory to register with
 	 * @throws BeanDefinitionStoreException if registration failed
 	 */
+	/*让我们继续跟踪程序的执行顺序，接下来我们来分析 DefaultBeanDefinitionDocumentReader 对
+	Bean 定 义转 换的 Document 对 象解 析的 流程 中， 在其 parseDefaultElement() 方 法中 完成对
+	Document 对 象 的 解 析 后 得 到 封 装 BeanDefinition 的 BeanDefinitionHold 对 象 ， 然 后 调 用
+	BeanDefinitionReaderUtils 的 registerBeanDefinition() 方 法 向 IOC 容 器 注 册 解 析 的 Bean ，
+	BeanDefinitionReaderUtils 的注册的源码如下：*/
+	/*当调用 BeanDefinitionReaderUtils 向 IOC 容器注册解析的 BeanDefinition 时，真正完成注册功能的
+	是 DefaultListableBeanFactory。*/
 	/*BeanDefinitionReaderUtils 主要是校验 BeanDefinition 信息，然后将 Bean 添加到容器中一个管理
 	BeanDefinition 的 HashMap 中。*/
 	//将解析的BeanDefinitionHold注册到容器中

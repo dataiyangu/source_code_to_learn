@@ -153,6 +153,12 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	 * @return Resource handle
 	 * @see org.springframework.web.context.support.XmlWebApplicationContext#getResourceByPath
 	 */
+	/*在ClassPathResource 中完成了对整个路径的解析。这样，就可以从类路径上对 IOC 配置文件进行加
+	载，当然我们可以按照这个逻辑从任何地方加载，在 Spring 中我们看到它提供的各种资源抽象，比如
+	ClassPathResource、URLResource、FileSystemResource 等来供我们使用。上面我们看到的是定位
+	Resource 的一个过程，而这只是加载过程的一部分。例如 FileSystemXmlApplication 容器就重写了
+	getResourceByPath()方法：*/
+	/*过子类的覆盖，巧妙地完成了将类路径变为文件路径的转换。*/
 	@Override
 	protected Resource getResourceByPath(String path) {
 		if (path.startsWith("/")) {

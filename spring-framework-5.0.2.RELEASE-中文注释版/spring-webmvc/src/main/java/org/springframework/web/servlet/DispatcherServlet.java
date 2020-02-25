@@ -167,6 +167,7 @@ Spring MVC 使用优化建议
 
 //======SpringMVC
 //======IOC容器初体验======
+//找到父类HttpServletBean中的init方法
 public class DispatcherServlet extends FrameworkServlet {
 
 	/** Well-known name for the MultipartResolver object in the bean factory for this namespace. */
@@ -911,7 +912,8 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * Exposes the DispatcherServlet-specific request attributes and delegates to {@link #doDispatch}
 	 * for the actual dispatching.
 	 */
-
+	/*这一步步是由请求触发的，所以入口为 DispatcherServlet 的核心方法为 doService()，
+	doService()中的核心逻辑由 doDispatch()实现，源代码如下：*/
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if (logger.isDebugEnabled()) {

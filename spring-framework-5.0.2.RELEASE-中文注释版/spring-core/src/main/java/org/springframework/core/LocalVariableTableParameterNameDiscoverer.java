@@ -113,6 +113,9 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 		try {
 			ClassReader classReader = new ClassReader(is);
 			Map<Member, String[]> map = new ConcurrentHashMap<>(32);
+			/*先是读取class文件进流里，然后借助ClassVisitor，
+			调用ClassReader的accept方法去解析Java类文件。而accept方法呈现的细节，正是对class文件解析。*/
+			/*在visitor中进行了操作，进入ParameterNameDiscoveringVisitor*/
 			classReader.accept(new ParameterNameDiscoveringVisitor(clazz, map), 0);
 			return map;
 		}
@@ -214,6 +217,7 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 			this.lvtSlotIndex = computeLvtSlotIndices(isStatic, this.args);
 		}
 
+		/*visitLocalVariable 方法。这样我们得到了局部变量表，再根据一些规则就可以拿到我们的参数名称了！*/
 		@Override
 		public void visitLocalVariable(String name, String description, String signature, Label start, Label end, int index) {
 			this.hasLvtInfo = true;

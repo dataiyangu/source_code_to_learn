@@ -298,6 +298,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
 	 */
+	/*从AbstractXmlApplicationContext的两种可能的第一个，loadBeanDefinitions()方法中的
+	reader.loadBeanDefinitions(configResources);过来的*/
+	/*继续回到 XmlBeanDefinitionReader 的 loadBeanDefinitions(Resource …)方法看到代表 bean 文件
+	的资源定义以后的载入过程。*/
 	//XmlBeanDefinitionReader加载资源的入口方法
 	@Override
 	public int loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException {
@@ -391,6 +395,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * @see #doLoadDocument
 	 * @see #registerBeanDefinitions
 	 */
+	/*通过源码分析，载入 Bean 配置信息的最后一步是将 Bean 配置信息转换为 Document 对象，该过程由
+	documentLoader()方法实现。*/
 	//从特定XML文件中实际载入Bean定义资源的方法
 	protected int doLoadBeanDefinitions(InputSource inputSource, Resource resource)
 			throws BeanDefinitionStoreException {
@@ -437,6 +443,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	protected Document doLoadDocument(InputSource inputSource, Resource resource) throws Exception {
 		return this.documentLoader.loadDocument(inputSource, getEntityResolver(), this.errorHandler,
 				getValidationModeForResource(resource), isNamespaceAware());
+		//点击到实现类中
 	}
 
 
@@ -511,12 +518,24 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * @see #setDocumentReaderClass
 	 * @see BeanDefinitionDocumentReader#registerBeanDefinitions
 	 */
+	/*XmlBeanDefinitionReader 类中的 doLoadBeanDefinition()方法是从特定 XML 文件中实际载入
+	Bean 配置资源的方法， 该方法在载入 Bean 配置资源之后将其转换为 Document 对象， 接下来调用
+	registerBeanDefinitions() 启 动 Spring IOC 容 器 对 Bean 定 义 的 解 析 过 程 ，
+	registerBeanDefinitions()方法源码如下：*/
 	//按照Spring的Bean语义要求将Bean定义资源解析并转换为容器内部数据结构
 	public int registerBeanDefinitions(Document doc, Resource resource) throws BeanDefinitionStoreException {
 		//得到BeanDefinitionDocumentReader来对xml格式的BeanDefinition解析
 		BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
 		//获得容器中注册的Bean数量
 		int countBefore = getRegistry().getBeanDefinitionCount();
+
+		/*Bean 配置资源的载入解析分为以下两个过程：
+		首先，通过调用 XML 解析器将 Bean 配置信息转换得到 Document 对象，但是这些 Document 对象
+		并没有按照 Spring 的 Bean 规则进行解析。这一步是载入的过程
+		其次，在完成通用的 XML 解析之后，按照 Spring Bean 的定义规则对 Document 对象进行解析，其
+		解 析 过 程 是 在 接 口 BeanDefinitionDocumentReader 的 实 现 类
+		DefaultBeanDefinitionDocumentReader 中实现。*/
+
 		//解析过程入口，这里使用了委派模式，BeanDefinitionDocumentReader只是个接口,
 		//具体的解析实现过程有实现类DefaultBeanDefinitionDocumentReader完成
 		documentReader.registerBeanDefinitions(doc, createReaderContext(resource));

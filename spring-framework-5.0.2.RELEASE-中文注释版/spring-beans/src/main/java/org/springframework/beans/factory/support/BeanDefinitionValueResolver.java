@@ -91,11 +91,16 @@ class BeanDefinitionValueResolver {
 	 * @param value the value object to resolve
 	 * @return the resolved object
 	 */
+	/*当容器在对属性进行依赖注入时，如果发现属性值需要进行类型转换，如属性值是容器中另一个 Bean
+	实例对象的引用，则容器首先需要根据属性值解析出所引用的对象，然后才能将该引用对象注入到目标
+	实例对象的属性上去，对属性进行解析的由 resolveValueIfNecessary()方法实现，其源码如下：*/
+
 	/*通过上面的代码分析，我们明白了 Spring 是如何将引用类型，内部类以及集合类型等属性进行解析的，
 	属性值解析完成后就可以进行依赖注入了，依赖注入的过程就是 Bean 对象实例设置到它所依赖的 Bean
 	对象属性上去。而真正的依赖注入是通过 bw.setPropertyValues()方法实现的，该方法也使用了委托模
 	式 ， 在 BeanWrapper 接 口 中 至 少 定 义 了 方 法 声 明 ， 依 赖 注 入 的 具 体 实 现 交 由 其 实 现 类
 	BeanWrapperImpl 来完成，下面我们就分析依 BeanWrapperImpl 中赖注入相关的源码*/
+
 	//解析属性值，对注入类型进行转换
 	@Nullable
 	public Object resolveValueIfNecessary(Object argName, @Nullable Object value) {

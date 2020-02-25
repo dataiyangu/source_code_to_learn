@@ -178,7 +178,7 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 		return this.beanNameGenerator;
 	}
 
-
+	//重载方法， 调用 loadBeanDefinitions(String);
 	@Override
 	public int loadBeanDefinitions(Resource... resources) throws BeanDefinitionStoreException {
 		Assert.notNull(resources, "Resource array must not be null");
@@ -188,7 +188,11 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 		}
 		return counter;
 	}
-	//重载方法，调用下面的loadBeanDefinitions(String, Set<Resource>);方法
+	//一共有两种，这里看的第二种
+
+	/*在 XmlBeanDefinitionReader 的抽象父类 AbstractBeanDefinitionReader 中定义了载入过程。
+	AbstractBeanDefinitionReader 的 loadBeanDefinitions()方法源码如下：*/
+	//重载方法，调用下面的loadBeanDefinitions(String, Set<Resource>);
 	@Override
 	public int loadBeanDefinitions(String location) throws BeanDefinitionStoreException {
 		return loadBeanDefinitions(location, null);
@@ -209,7 +213,20 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 	 * @see #loadBeanDefinitions(org.springframework.core.io.Resource)
 	 * @see #loadBeanDefinitions(org.springframework.core.io.Resource[])
 	 */
-	//一共有两种，这里看的第二种
+	/*AbstractRefreshableConfigApplicationContext 的 loadBeanDefinitions(Resource...resources) 方
+	法实际上是调用 AbstractBeanDefinitionReader 的 loadBeanDefinitions()方法。
+	从对 AbstractBeanDefinitionReader 的 loadBeanDefinitions()方法源码分析可以看出该方法就做了
+	两件事：
+	首先，调用资源加载器的获取资源方法 resourceLoader.getResource(location)，获取到要加载的资源。
+	其次，真正执行加载功能是其子类 XmlBeanDefinitionReader 的 loadBeanDefinitions()方法。在
+	loadBeanDefinitions()方法中调用了 AbstractApplicationContext 的 getResources()方法，跟进去之
+	后发现 getResources()方法其实定义在 ResourcePatternResolver 中，此时，我们有必要来看一下
+	ResourcePatternResolver 的全类图：
+	从上面可以看到 ResourceLoader 与 ApplicationContext 的继承关系，可以看出其实际调用的是
+	DefaultResourceLoader 中 的 getSource() 方 法 定 位 Resource ， 因 为
+	ClassPathXmlApplicationContext 本身就是 DefaultResourceLoader 的实现类，所以此时又回到了
+	ClassPathXmlApplicationContext 中来*/
+
 	public int loadBeanDefinitions(String location, @Nullable Set<Resource> actualResources) throws BeanDefinitionStoreException {
 		//获取在IoC容器初始化过程中设置的资源加载器
 		ResourceLoader resourceLoader = getResourceLoader();

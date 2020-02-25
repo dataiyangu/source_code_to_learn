@@ -42,6 +42,7 @@ import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -62,6 +63,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -720,7 +722,8 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	protected boolean supportsInternal(HandlerMethod handlerMethod) {
 		return true;
 	}
-
+	/*整个处理过程中最核心的逻辑其实就是拼接 Controller 的 url 和方法的 url，与 Request
+	的 url 进行匹配，找到匹配的方法。*/
 	@Override
 	protected ModelAndView handleInternal(HttpServletRequest request,
 			HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
@@ -811,6 +814,8 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	的操作
 	*/
 	/** 获取处理请求的方法,执行并返回结果视图 **/
+	/*通过上面的代码分析，已经可以找到处理 Request 的 Controller 中的方法了，现在看如
+	何解析该方法上的参数，并反射调用该方法*/
 	@Nullable
 	protected ModelAndView invokeHandlerMethod(HttpServletRequest request,
 			HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
@@ -853,7 +858,18 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 				}
 				invocableMethod = invocableMethod.wrapConcurrentResult(result);
 			}
-
+			/*invocableMethod.invokeAndHandle()最终要实现的目的就是：完成 Request 中的参
+			数和方法参数上数据的绑定。Spring MVC 中提供两种 Request 参数到方法中参数的绑
+			定方式：
+			1、通过注解进行绑定，@RequestParam。
+			2、通过参数名称进行绑定。
+			使用注解进行绑定，我们只要在方法参数前面声明@RequestParam("name")，就可以
+			将 request 中参数 name 的值绑定到方法的该参数上。使用参数名称进行绑定的前提是
+			必须要获取方法中参数的名称，Java 反射只提供了获取方法的参数的类型，并没有提供
+			获取参数名称的方法。SpringMVC 解决这个问题的方法是用 asm 框架读取字节码文件，
+			来获取方法的参数名称。asm 框架是一个字节码操作框架，关于 asm 更多介绍可以参考
+			其官网。个人建议，使用注解来完成参数绑定，这样就可以省去 asm 框架的读取字节码
+			的操作。*/
 			invocableMethod.invokeAndHandle(webRequest, mavContainer);
 			if (asyncManager.isConcurrentHandlingStarted()) {
 				return null;

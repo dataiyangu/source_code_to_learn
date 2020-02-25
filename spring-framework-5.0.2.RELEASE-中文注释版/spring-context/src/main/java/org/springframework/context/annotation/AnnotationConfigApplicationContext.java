@@ -50,7 +50,11 @@ import java.util.function.Supplier;
  * @see ClassPathBeanDefinitionScanner
  * @see org.springframework.context.support.GenericXmlApplicationContext
  */
-
+		/*在 Spring 中 管 理 注 解 Bean 定 义 的 容 器 有 两 个 ： AnnotationConfigApplicationContext 和
+		AnnotationConfigWebApplicationContex。这两个类是专门处理 Spring 注解方式配置的容器，直接
+		依赖于注解作为容器配置信息来源的 IOC 容器。AnnotationConfigWebApplicationContext 是
+		AnnotationConfigApplicationContext 的 Web 版本，两者的用法以及对注解的处理方式几乎没有差
+		别。现在我们以 AnnotationConfigApplicationContext 为例看看它的源码：*/
 
 		/*通过上面的源码分析，我们可以看啊到 Spring 对注解的处理分为两种方式：
 		1)、直接将注解 Bean 注册到容器中
@@ -171,6 +175,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * @see #scan(String...)
 	 * @see #refresh()
 	 */
+	//从处理方式一过来。
 	//为容器注册一个要被处理的注解Bean，新注册的Bean，必须手动调用容器的
 	//refresh()方法刷新容器，触发容器对新注册的Bean的处理
 	public void register(Class<?>... annotatedClasses) {

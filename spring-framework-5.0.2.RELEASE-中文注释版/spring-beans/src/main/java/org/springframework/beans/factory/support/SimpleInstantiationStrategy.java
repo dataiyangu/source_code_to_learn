@@ -56,7 +56,7 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 		return currentlyInvokedFactoryMethod.get();
 	}
 
-	/*我们看到了如果 Bean 有方法被覆盖了，则使用 JDK 的反射机制进行实例化，否
+	/*我们看到了如果 Bean 没有方法被覆盖了，则使用 JDK 的反射机制进行实例化，否
 	则，使用 CGLib 进行实例化*/
 	//使用初始化策略实例化Bean对象
 	@Override

@@ -479,6 +479,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 *
 	 * @see #doCreateBean
 	 */
+	/*AbstractAutowireCapableBeanFactory 类实现了 ObjectFactory 接口，创建容器指定的 Bean 实例对
+	象，同时还对创建的 Bean 实例对象进行初始化处理。其创建 Bean 实例对象的方法源码如下：*/
 	//创建Bean实例对象
 	@Override
 	protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
@@ -1129,10 +1131,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @see #autowireConstructor
 	 * @see #instantiateBean
 	 */
+	/*在createBeanInstance()方法中，根据指定的初始化策略，使用简单工厂、工厂方法或者容器的自动装
+	配特性生成 Java 实例对象，创建对象的源码如下：*/
+
 	/*经过对上面的代码分析，我们可以看出，对使用工厂方法和自动装配特性的 Bean 的实例化相当比较清
 	楚，调用相应的工厂方法或者参数匹配的构造方法即可完成实例化对象的工作，但是对于我们最常使用
 	的默认无参构造方法就需要使用相应的初始化策略(JDK 的反射机制或者 CGLib)来进行初始化了，在方
 	法 getInstantiationStrategy().instantiate()中就具体实现类使用初始策略实例化对象*/
+
 	//创建Bean的实例对象
 	protected BeanWrapper createBeanInstance(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) {
 		// Make sure bean class is actually resolved at this point.
@@ -1281,6 +1287,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @param mbd      the bean definition for the bean
 	 * @return a BeanWrapper for the new instance
 	 */
+	/*在使用默认的无参构造方法创建 Bean 的实例化对象时，方法 getInstantiationStrategy().instantiate()
+	调用了 SimpleInstantiationStrategy 类中的实例化 Bean 的方法，其源码如下*/
+
 	//使用默认的无参构造方法实例化Bean对象
 	protected BeanWrapper instantiateBean(final String beanName, final RootBeanDefinition mbd) {
 		try {
@@ -1366,7 +1375,17 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	对属性值的依赖注入是通过 bw.setPropertyValues()方法实现的，在分析属性值的依赖注入之前，我们
 	先分析一下对属性值的解析过程。*/
 
-	/*应用第一次通过 getBean()方法(配置了 lazy-init 预实例化属性的除外)向 IOC 容器索取 Bean 时，容器
+	/*Spring IOC 容器提供了两种管理 Bean 依赖关系的方式：
+	1)、显式管理：通过 BeanDefinition 的属性值和构造方法实现 Bean 依赖关系管理。
+	2)、autowiring：Spring IOC 容器的依赖自动装配功能，不需要对 Bean 属性的依赖关系做显式的声明，
+	只需要在配置好 autowiring 属性，IOC 容器会自动使用反射查找属性的类型和名称，然后基于属性的
+	类型或者名称来自动匹配容器中管理的 Bean，从而自动地完成依赖注入。
+	通过对 autowiring 自动装配特性的理解，我们知道容器对 Bean 的自动装配发生在容器对 Bean 依赖注
+	入的过程中。在前面对 Spring IOC 容器的依赖注入过程源码分析中，我们已经知道了容器对 Bean 实
+	例对象的属性注入的处理发生在 AbstractAutoWireCapableBeanFactory 类中的 populateBean()方
+	法中，我们通过程序流程分析 autowiring 的实现原理：
+
+	应用第一次通过 getBean()方法(配置了 lazy-init 预实例化属性的除外)向 IOC 容器索取 Bean 时，容器
 	创 建 Bean 实 例 对 象 ， 并 且 对 Bean 实 例 对 象 进 行 属 性 依 赖 注 入 ，
 	AbstractAutoWireCapableBeanFactory 的 populateBean()方法就是实现 Bean 属性依赖注入的功
 	能，其主要源码如下：*/
@@ -1508,6 +1527,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @param bw       BeanWrapper from which we can obtain information about the bean
 	 * @param pvs      the PropertyValues to register wired objects with
 	 */
+	/*通过上面的源码分析，我们可以看出来通过属性名进行自动依赖注入的相对比通过属性类型进行自动依
+	赖 注 入 要 稍 微 简 单 一 些 ， 但 是 真 正 实 现 属 性 注 入 的 是 DefaultSingletonBeanRegistry 类 的
+	registerDependentBean()方法*/
 	//根据类型对属性进行自动依赖注入
 	protected void autowireByType(
 			String beanName, AbstractBeanDefinition mbd, BeanWrapper bw, MutablePropertyValues pvs) {
@@ -1687,6 +1709,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @param bw       the BeanWrapper wrapping the target object
 	 * @param pvs      the new property values
 	 */
+	/*分析上述代码，我们可以看出，对属性的注入过程分以下两种情况：
+			1)、属性值类型不需要强制转换时，不需要解析属性值，直接准备进行依赖注入。
+			2)、属性值需要进行类型强制转换时，如对其他对象的引用等，首先需要解析属性值，然后对解析后的
+	属性值进行依赖注入。
+	对属性值的解析是在 BeanDefinitionValueResolver 类中的 resolveValueIfNecessary()方法中进行的，
+	对属性值的依赖注入是通过 bw.setPropertyValues()方法实现的，在分析属性值的依赖注入之前，我们
+	先分析一下对属性值的解析过程。*/
 	/*当容器在对属性进行依赖注入时，如果发现属性值需要进行类型转换，如属性值是容器中另一个 Bean
 	实例对象的引用，则容器首先需要根据属性值解析出所引用的对象，然后才能将该引用对象注入到目标
 	实例对象的属性上去，对属性进行解析的由 resolveValueIfNecessary()方法实现，其源码如下：*/
@@ -1713,6 +1742,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			if (mpvs.isConverted()) {
 				// Shortcut: use the pre-converted values as-is.
 				try {
+					//看了下面的resolveValueIfNecessary，回来接着看
 					//为实例化对象设置属性值
 					bw.setPropertyValues(mpvs);
 					return;
@@ -1835,6 +1865,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @see #invokeInitMethods
 	 * @see #applyBeanPostProcessorsAfterInitialization
 	 */
+	/*同样在 AbstractAutowireCapableBeanFactory 类中，initializeBean()方法实现为容器创建的 Bean
+	实例对象添加 BeanPostProcessor 后置处理器，源码如下*/
 	//初始容器创建的Bean实例对象，为其添加BeanPostProcessor后置处理器
 	protected Object initializeBean(final String beanName, final Object bean, @Nullable RootBeanDefinition mbd) {
 		//JDK的安全机制验证权限

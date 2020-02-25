@@ -568,6 +568,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		//给上一步创建好的IOC容器赋值
 		if (wac == null) {
 			// No context instance is defined for this servlet -> create a local one
+			//这里和上面的configureAndRefreshWebApplicationContext都能到refresh方法
 			wac = createWebApplicationContext(rootContext);
 		}
 
@@ -576,6 +577,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 			// Either the context is not a ConfigurableApplicationContext with refresh
 			// support or the context injected at construction time had already been
 			// refreshed -> trigger initial onRefresh manually here.
+			//初始化springMVC的九大组件
 			onRefresh(wac);
 		}
 

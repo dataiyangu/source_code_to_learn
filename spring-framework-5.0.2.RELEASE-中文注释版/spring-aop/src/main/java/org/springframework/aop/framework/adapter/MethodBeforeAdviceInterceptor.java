@@ -28,7 +28,9 @@ import org.springframework.util.Assert;
  * Interceptor to wrap am {@link org.springframework.aop.MethodBeforeAdvice}.
  * Used internally by the AOP framework; application developers should not need
  * to use this class directly.
- *
+ *拦截器来封装am {@link org.springframework.aop.MethodBeforeAdvice}。
+ * *在AOP框架内部使用;应用程序开发人员不应该需要
+ * *直接使用这个类。
  * @author Rod Johnson
  */
 @SuppressWarnings("serial")

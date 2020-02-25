@@ -53,6 +53,12 @@ public class BeanNameUrlHandlerMapping extends AbstractDetectingUrlHandlerMappin
 	/**
 	 * Checks name and aliases of the given bean for URLs, starting with "/".
 	 */
+	/*determineUrlsForHandler(String beanName)方法的作用是获取每个 Controller 中的
+	url，不同的子类有不同的实现，这是一个典型的模板设计模式。因为开发中我们用的最
+	多 的 就 是 用 注 解 来 配 置 Controller 中 的 url ， BeanNameUrlHandlerMapping 是
+	AbstractDetectingUrlHandlerMapping 的子类,处理注解形式的 url 映射.所以我们这里
+	以 BeanNameUrlHandlerMapping 来 进 行 分 析 。 我 们 看
+	BeanNameUrlHandlerMapping 是如何查 beanName 上所有映射的 url*/
 	@Override
 	protected String[] determineUrlsForHandler(String beanName) {
 		List<String> urls = new ArrayList<>();

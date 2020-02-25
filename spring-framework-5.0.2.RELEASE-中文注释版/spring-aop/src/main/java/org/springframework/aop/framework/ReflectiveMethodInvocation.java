@@ -23,6 +23,7 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.core.BridgeMethodResolver;
 import org.springframework.lang.Nullable;
 
+import javax.swing.*;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -154,16 +155,26 @@ public class ReflectiveMethodInvocation implements ProxyMethodInvocation, Clonea
 		this.arguments = arguments;
 	}
 
+	/*下面我们看看Cglib是如何通过生成的切面调用链将目标对象进行环绕的。前面我们讲了，
+	将切面逻辑进行织入的逻辑在CglibMethodInvocation中，实际上其调用逻辑在其proceed()方法中，这里我们直接看该方法的源码：*/
+
+	/*这里proceed()方法的逻辑比较简单，其使用一个索引记录了当前正在调用的Interceptor在调用链中的位置，并且依次对调
+	用链进行调用，从而实现将切面逻辑织入目标对象的目的。这里最终对目标对象的调用的逻辑在invokeJoinpoint()方法中。*/
+
+	/*从这 段 代 码 可 以 看 出 ， 如 果 得 到 的 拦 截 器 链 为 空 ， 则 直 接 反 射 调 用 目 标 方 法 ， 否 则 创 建
+	MethodInvocation，调用其 proceed()方法，触发拦截器链的执行，来看下具体代码*/
 	/*至此，通知链就完美地形成了。*/
 	@Override
 	@Nullable
 	public Object proceed() throws Throwable {
 		//	We start with an index of -1 and increment early.
+		// 这里currentInterceptorIndex记录了当前调用链中正在调用的Intercepor的下标，该数值初始为-1
 		//如果Interceptor执行完了，则执行joinPoint
 		if (this.currentInterceptorIndex == this.interceptorsAndDynamicMethodMatchers.size() - 1) {
+			// 如果调用链为空，则直接调用目标方法
 			return invokeJoinpoint();
 		}
-
+		// 获取下一个需要织入的Interceptor逻辑
 		Object interceptorOrInterceptionAdvice =
 				this.interceptorsAndDynamicMethodMatchers.get(++this.currentInterceptorIndex);
 		//如果要动态匹配joinPoint
@@ -173,7 +184,10 @@ public class ReflectiveMethodInvocation implements ProxyMethodInvocation, Clonea
 			InterceptorAndDynamicMethodMatcher dm =
 					(InterceptorAndDynamicMethodMatcher) interceptorOrInterceptionAdvice;
 			//动态匹配：运行时参数是否满足匹配条件
+			// 对动态的方法进行匹配，如果匹配成功，才进行调用，否则直接进行下一个Interceptor的调用
 			if (dm.methodMatcher.matches(this.method, this.targetClass, this.arguments)) {
+				// 可以看标签Spring AOP编织能力，这里生成了不同的Interceptor，进而有不同的invoke方法，
+				//这里通过策略模式进行不同的invke。
 				return dm.interceptor.invoke(this);
 			} else {
 				// Dynamic matching failed.
@@ -185,6 +199,7 @@ public class ReflectiveMethodInvocation implements ProxyMethodInvocation, Clonea
 			// It's an interceptor, so we just invoke it: The pointcut will have
 			// been evaluated statically before this object was constructed.
 			//执行当前Intercetpor
+			// 如果不需要进行动态匹配，则直接进行下一步的调用
 			return ((MethodInterceptor) interceptorOrInterceptionAdvice).invoke(this);
 		}
 	}

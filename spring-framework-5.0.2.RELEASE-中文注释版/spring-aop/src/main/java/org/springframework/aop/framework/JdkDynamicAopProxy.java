@@ -164,6 +164,11 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 	 * <p>Callers will see exactly the exception thrown by the target,
 	 * unless a hook method throws an exception.
 	 */
+	/*主要实现思路可以简述为：首先获取应用到此方法上的通知链（Interceptor Chain）。如果有通知，则
+	应用通知，并执行 JoinPoint；如果没有通知，则直接反射执行 JoinPoint。而这里的关键是通知链是如
+	何获取的以及它又是如何执行的呢？现在来逐一分析。首先，从上面的代码可以看到，通知链是通过
+	Advised.getInterceptorsAndDynamicInterceptionAdvice()这个方法来获取的，我们来看下这个方法
+	的实现逻辑：*/
 	@Override
 	@Nullable
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -193,6 +198,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			else if (!this.advised.opaque && method.getDeclaringClass().isInterface() &&
 					method.getDeclaringClass().isAssignableFrom(Advised.class)) {
 				// Service invocations on ProxyConfig with the proxy config...
+				//回过头看看下invokeJoinpointUsingReflection方法
 				return AopUtils.invokeJoinpointUsingReflection(this.advised, method, args);
 			}
 

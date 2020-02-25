@@ -89,6 +89,9 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 * <p>Opens a DOM Document; then initializes the default settings
 	 * specified at the {@code <beans/>} level; then parses the contained bean definitions.
 	 */
+	/*BeanDefinitionDocumentReader 接 口 通 过 registerBeanDefinitions() 方 法 调 用 其 实 现 类
+	DefaultBeanDefinitionDocumentReader 对 Document 对象进行解析，解析的代码如下*/
+
 	//根据Spring DTD对Bean的定义规则解析Bean定义Document对象
 	@Override
 	public void registerBeanDefinitions(Document doc, XmlReaderContext readerContext) {
@@ -215,9 +218,6 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		else if (delegate.nodeNameEquals(ele, ALIAS_ELEMENT)) {
 			processAliasRegistration(ele);
 		}
-		//元素节点既不是导入元素，也不是别名元素，即普通的<Bean>元素，
-		//按照Spring的Bean规则解析元素
-
 		/*我们使用 Spring 时，在
 		Spring 配置文件中可以使用<import>元素来导入 IOC 容器所需要的其他资源，Spring IOC 容器在解
 		析时会首先将指定导入的资源加载进容器中。使用<ailas>别名时，Spring IOC 容器首先将别名元素所
@@ -225,8 +225,18 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		对于既不是<import>元素，又不是<alias>元素的元素，即 Spring 配置文件中普通的<bean>元素的
 		解析由 BeanDefinitionParserDelegate 类的 parseBeanDefinitionElement()方法来实现。这个解析的
 		过程非常复杂*/
+
+		//元素节点既不是导入元素，也不是别名元素，即普通的<Bean>元素，
+		//按照Spring的Bean规则解析元素
 		else if (delegate.nodeNameEquals(ele, BEAN_ELEMENT)) {
 			processBeanDefinition(ele, delegate);
+			/*通过上述 Spring IOC 容器对载入的 Bean 定义 Document 解析可以看出，我们使用 Spring 时，在
+			Spring 配置文件中可以使用<import>元素来导入 IOC 容器所需要的其他资源，Spring IOC 容器在解
+			析时会首先将指定导入的资源加载进容器中。使用<ailas>别名时，Spring IOC 容器首先将别名元素所
+			定义的别名注册到容器中。
+			对于既不是<import>元素，又不是<alias>元素的元素，即 Spring 配置文件中普通的<bean>元素的
+			解析由 BeanDefinitionParserDelegate 类的 parseBeanDefinitionElement()方法来实现。这个解析的
+			过程非常复杂，我们在 mini 版本的时候，就用 properties 文件代替了*/
 		}
 		else if (delegate.nodeNameEquals(ele, NESTED_BEANS_ELEMENT)) {
 			// recurse
@@ -299,6 +309,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 					//获取Spring IOC容器资源读入器的基本路径
 					String baseLocation = getReaderContext().getResource().getURL().toString();
 					//根据Spring IOC容器资源读入器的基本路径加载给定导入路径的资源
+					//这里猜测可能不是绝对路径的话，可以放在相对路径或者指定的读入器的基本路径
 					importCount = getReaderContext().getReader().loadBeanDefinitions(
 							StringUtils.applyRelativePath(baseLocation, location), actualResources);
 				}

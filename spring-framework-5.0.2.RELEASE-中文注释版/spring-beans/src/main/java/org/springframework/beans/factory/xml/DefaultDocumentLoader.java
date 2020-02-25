@@ -64,6 +64,7 @@ public class DefaultDocumentLoader implements DocumentLoader {
 	 * Load the {@link Document} at the supplied {@link InputSource} using the standard JAXP-configured
 	 * XML parser.
 	 */
+	/*DocumentLoader 将 Bean 配置资源转换成 Document 对象的源码如下：*/
 	//使用标准的JAXP将载入的Bean定义资源转换成document对象
 	@Override
 	public Document loadDocument(InputSource inputSource, EntityResolver entityResolver,
@@ -76,6 +77,12 @@ public class DefaultDocumentLoader implements DocumentLoader {
 		}
 		//创建文档解析器
 		DocumentBuilder builder = createDocumentBuilder(factory, entityResolver, errorHandler);
+
+		/*上面的解析过程是调用 JavaEE 标准的 JAXP 标准进行处理。 至此 Spring IOC 容器根据定位的 Bean 配
+		置信息， 将其加载读入并转换成为 Document 对象过程完成。 接下来我们要继续分析 Spring IOC 容器
+		将载入的 Bean 配置信息转换为 Document 对象之后， 是如何将其解析为 Spring IOC 管理的 Bean 对象
+		并将其注册到容器中的。*/
+
 		//解析Spring的Bean定义资源
 		return builder.parse(inputSource);
 	}

@@ -144,6 +144,8 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 	 * @throws ServletException if bean properties are invalid (or required
 	 * properties are missing), or if subclass initialization fails.
 	 */
+	/*我们首先找到 DispatcherServlet 这个类，必然是寻找 init()方法。然后，我们发现其 init
+	方法其实在父类 HttpServletBean 中，其源码如下：*/
 	@Override
 	public final void init() throws ServletException {
 		if (logger.isDebugEnabled()) {
@@ -197,6 +199,10 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 	 * <p>This default implementation is empty.
 	 * @throws ServletException if subclass initialization fails
 	 */
+	/*这段代码中最主要的逻辑就是初始化 IOC 容器，最终会调用 refresh()方法，前面的章节
+	中对 IOC 容器的初始化细节我们已经详细掌握，在此我们不再赘述。我们看到上面的代
+	码中，IOC 容器初始化之后，最后有调用了 onRefresh()方法。这个方法最终是在
+	DisptcherServlet 中实现，来看源码：*/
 	protected void initServletBean() throws ServletException {
 	}
 

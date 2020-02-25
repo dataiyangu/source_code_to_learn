@@ -56,7 +56,14 @@ import java.util.Set;
  * @see org.springframework.stereotype.Service
  * @see org.springframework.stereotype.Controller
  */
-/*依次往下看这个类吧~*/
+	/*当创建注解处理容器时，如果传入的初始参数是注解 Bean 定义类所在的包时，注解容器将扫描给定的
+	包及其子包，将扫描到的注解 Bean 定义载入并注册。*/
+	/*依次往下看这个类吧~*/
+
+	/*这里从前面的AnnotationConfigApplicationContext 中的方式二能过来到这里的scan方法*/
+
+	/*类路径 Bean 定义扫描器 ClassPathBeanDefinitionScanner 主要通过 findCandidateComponents()
+	方法调用其父类 ClassPathScanningCandidateComponentProvider 类来扫描获取给定包及其子包下的类。*/
 public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateComponentProvider {
 
 	private final BeanDefinitionRegistry registry;
@@ -285,6 +292,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 		for (String basePackage : basePackages) {
 			//调用父类ClassPathScanningCandidateComponentProvider的方法
 			//扫描给定类路径，获取符合条件的Bean定义
+			//点点点
 			Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
 			//遍历扫描到的Bean
 			for (BeanDefinition candidate : candidates) {

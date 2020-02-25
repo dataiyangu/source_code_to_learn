@@ -1093,7 +1093,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			if (multipleBeans != null) {
 				return multipleBeans;
 			}
-
+			//按照类型查找Bean实例
 			Map<String, Object> matchingBeans = findAutowireCandidates(beanName, type, descriptor);
 			if (matchingBeans.isEmpty()) {
 				if (isRequired(descriptor)) {
@@ -1104,9 +1104,27 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 			String autowiredBeanName;
 			Object instanceCandidate;
-
+			//如果查找的Bean实例大于1个
 			if (matchingBeans.size() > 1) {
+				/*可以看到它返回的是一个列表，那么就表明，按照类型匹配可能会查询到多个实例。到底应该装配哪个实例呢？
+				我看有的文章里说，可以加注解以此规避。比如@qulifier、@Primary等，实际还有个简单的办法。
+				比如，按照UserService接口类型来装配它的实现类。UserService接口有多个实现类，
+				分为UserServiceImpl、UserServiceImpl2。
+				那么我们在注入的时候，就可以把属性名称定义为Bean实现类的名称。
+				@Autowired
+				UserService UserServiceImpl2;
+				复制代码这样的话，Spring会按照byName来进行装配。首先，如果查到类型的多个实例，Spring已经做了判断。*/
+
+				/*可以看出，如果查到多个实例，determineAutowireCandidate方法就是关键。它来确定一个合适的Bean返回。
+				其中一部分就是按照Bean的名称来匹配。*/
 				autowiredBeanName = determineAutowireCandidate(matchingBeans, descriptor);
+
+				/*总结
+				本章节重点阐述了Spring中的自动装配的几种策略，又通过源码分析了Autowired注解的使用方式。
+				在Spring3.0之后，有效的自动装配策略分为byType、byName、constructor三种方式。
+				注解Autowired默认使用byType来自动装配，如果存在类型的多个实例就尝试使用byName匹配，
+				如果通过byName也确定不了，可以通过Primary和Priority注解来确定*/。
+
 				if (autowiredBeanName == null) {
 					if (isRequired(descriptor) || !indicatesMultipleBeans(type)) {
 						return descriptor.resolveNotUnique(type, matchingBeans);
@@ -1262,7 +1280,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	 */
 	protected Map<String, Object> findAutowireCandidates(
 			@Nullable String beanName, Class<?> requiredType, DependencyDescriptor descriptor) {
-
+		//获取给定类型的所有bean名称，里面实际循环所有的beanName，获取它的实例
+		//再通过isTypeMatch方法来确定
 		String[] candidateNames = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(
 				this, requiredType, true, descriptor.isEager());
 		Map<String, Object> result = new LinkedHashMap<>(candidateNames.length);
@@ -1276,6 +1295,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 				}
 			}
 		}
+		//根据返回的beanName，获取其实例返回
 		for (String candidate : candidateNames) {
 			if (!isSelfReference(beanName, candidate) && isAutowireCandidate(candidate, descriptor)) {
 				addCandidateEntry(result, candidate, descriptor, requiredType);
@@ -1331,22 +1351,35 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	@Nullable
 	protected String determineAutowireCandidate(Map<String, Object> candidates, DependencyDescriptor descriptor) {
 		Class<?> requiredType = descriptor.getDependencyType();
+		//通过@Primary注解来标识Bean
 		String primaryCandidate = determinePrimaryCandidate(candidates, requiredType);
 		if (primaryCandidate != null) {
 			return primaryCandidate;
 		}
+		//通过@Priority(value = 0)注解来标识Bean value为优先级大小
 		String priorityCandidate = determineHighestPriorityCandidate(candidates, requiredType);
 		if (priorityCandidate != null) {
 			return priorityCandidate;
 		}
+		/*最后，有一点需要注意。Priority的包在javax.annotation.Priority;，如果想使用它还要引入一个坐标。
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.2</version>
+		</dependency>*/
+
 		// Fallback
+		//循环拿到的Bean集合
 		for (Map.Entry<String, Object> entry : candidates.entrySet()) {
 			String candidateName = entry.getKey();
 			Object beanInstance = entry.getValue();
+			//通过matchesBeanName方法来确定bean集合中的名称是否与属性的名称相同
 			if ((beanInstance != null && this.resolvableDependencies.containsValue(beanInstance)) ||
 					matchesBeanName(candidateName, descriptor.getDependencyName())) {
 				return candidateName;
 			}
+			/*最后我们回到问题上，得到的答案就是：@Autowired默认使用byType来装配属性，
+			如果匹配到类型的多个实例，再通过byName来确定Bean。*/
 		}
 		return null;
 	}
@@ -1407,6 +1440,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			Integer candidatePriority = getPriority(beanInstance);
 			if (candidatePriority != null) {
 				if (highestPriorityBeanName != null) {
+					//如果优先级大小相同
 					if (candidatePriority.equals(highestPriority)) {
 						throw new NoUniqueBeanDefinitionException(requiredType, candidates.size(),
 								"Multiple beans found with the same priority ('" + highestPriority +

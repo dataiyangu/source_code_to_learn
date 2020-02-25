@@ -32,6 +32,9 @@ import org.springframework.aop.MethodBeforeAdvice;
  * @author Juergen Hoeller
  */
 @SuppressWarnings("serial")
+		/*DefaultAdvisorAdapterRegistry 设置了一系列的是配置，正是这些适配器的实现，为
+		Spring AOP 提供了编织能力。下面以 MethodBeforeAdviceAdapter 为例，看具体的
+		实现：*/
 class MethodBeforeAdviceAdapter implements AdvisorAdapter, Serializable {
 
 	@Override
@@ -39,6 +42,11 @@ class MethodBeforeAdviceAdapter implements AdvisorAdapter, Serializable {
 		return (advice instanceof MethodBeforeAdvice);
 	}
 
+	/*
+	这个方法可以点到DefaultAdvisorChainFactory类中的
+	//将Advisor转化成Interceptor
+	MethodInterceptor[] interceptors = registry.getInterceptors(advisor);
+	* */
 	@Override
 	public MethodInterceptor getInterceptor(Advisor advisor) {
 		MethodBeforeAdvice advice = (MethodBeforeAdvice) advisor.getAdvice();

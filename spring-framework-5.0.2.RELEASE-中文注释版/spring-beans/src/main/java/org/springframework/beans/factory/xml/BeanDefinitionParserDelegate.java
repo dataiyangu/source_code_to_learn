@@ -367,6 +367,9 @@ public class BeanDefinitionParserDelegate {
 	 * if there were errors during parse. Errors are reported to the
 	 * {@link org.springframework.beans.factory.parsing.ProblemReporter}.
 	 */
+	/*Bean 配置信息中的<import>和<alias>元素解析在 DefaultBeanDefinitionDocumentReader 中已
+	经完成，对 Bean 配置信息中使用最多的<bean>元素交由 BeanDefinitionParserDelegate 来解析，
+	其解析实现的源码如下*/
 	//解析<Bean>元素的入口
 	@Nullable
 	public BeanDefinitionHolder parseBeanDefinitionElement(Element ele) {
@@ -378,6 +381,14 @@ public class BeanDefinitionParserDelegate {
 	 * if there were errors during parse. Errors are reported to the
 	 * {@link org.springframework.beans.factory.parsing.ProblemReporter}.
 	 */
+	/*只要使用过 Spring，对 Spring 配置文件比较熟悉的人，通过对上述源码的分析，就会明白我们在 Spring
+		配置文件中<Bean>元素的中配置的属性就是通过该方法解析和设置到 Bean 中去的。
+		注意：在解析<Bean>元素过程中没有创建和实例化 Bean 对象，只是创建了 Bean 对象的定义类
+		BeanDefinition，将<Bean>元素中的配置信息设置到 BeanDefinition 中作为记录，当依赖注入时才
+		使用这些记录信息创建和实例化具体的 Bean 对象。
+		上面方法中一些对一些配置如元信息(meta)、qualifier 等的解析，我们在 Spring 中配置时使用的也不
+		多，我们在使用 Spring 的<Bean>元素时，配置最多的是<property>属性，因此我们下面继续分析源
+		码，了解 Bean 的属性在解析时是如何设置的*/
 	//解析Bean定义资源文件中的<Bean>元素，这个方法中主要处理<Bean>元素的id，name和别名属性
 	@Nullable
 	public BeanDefinitionHolder parseBeanDefinitionElement(Element ele, @Nullable BeanDefinition containingBean) {
@@ -705,6 +716,8 @@ public class BeanDefinitionParserDelegate {
 	/**
 	 * Parse property sub-elements of the given bean element.
 	 */
+	/*BeanDefinitionParserDelegate 在解析<Bean>调用 parsePropertyElements()方法解析<Bean>元
+	素中的<property>属性子元素，解析源码如下*/
 	//解析<Bean>元素中的<property>子元素
 	public void parsePropertyElements(Element beanEle, BeanDefinition bd) {
 		//获取<Bean>元素中所有的子元素
@@ -923,7 +936,10 @@ public class BeanDefinitionParserDelegate {
 			1、ref 被封装为指向依赖对象一个引用。
 			2、value 配置都会封装成一个字符串类型的对象。
 			3、ref 和 value 都通过“解析的数据类型属性值.setSource(extractSource(ele));”方法将属性值/引用
-			与所引用的属性关联起来*/
+			与所引用的属性关联起来
+	在方法的最后对于<property>元素的子元素通过 parsePropertySubElement ()方法解析，我们继续分
+	析该方法的源码，了解其解析过程。
+	*/
 	public Object parsePropertyValue(Element ele, BeanDefinition bd, @Nullable String propertyName) {
 		String elementName = (propertyName != null) ?
 						"<property> element for property '" + propertyName + "'" :
@@ -1005,6 +1021,14 @@ public class BeanDefinitionParserDelegate {
 	 * @param defaultValueType the default type (class name) for any
 	 * {@code <value>} tag that might be created
 	 */
+	/*在 BeanDefinitionParserDelegate 类中的 parsePropertySubElement()方法对<property>中的子元
+	素解析，源码如下：*/
+	/*通过上述源码分析，我们明白了在 Spring 配置文件中，对<property>元素中配置的 array、list、set、
+	map、prop 等各种集合子元素的都通过上述方法解析，生成对应的数据对象，比如 ManagedList、
+	ManagedArray、ManagedSet 等，这些 Managed 类是 Spring 对象 BeanDefiniton 的数据封装，对
+	集合数据类型的具体解析有各自的解析方法实现，解析方法的命名非常规范，一目了然，我们对<list>
+	集合元素的解析方法进行源码分析，了解其实现过程。*/
+
 	//解析<property>元素中ref,value或者集合等子元素
 	@Nullable
 	public Object parsePropertySubElement(Element ele, @Nullable BeanDefinition bd, @Nullable String defaultValueType) {
@@ -1177,6 +1201,8 @@ public class BeanDefinitionParserDelegate {
 	/**
 	 * Parse a list element.
 	 */
+	/*在BeanDefinitionParserDelegate 类中的 parseListElement()方法就是具体实现解析<property>元
+	素中的<list>集合子元素，源码如下：*/
 	//解析<list>集合子元素
 	public List<Object> parseListElement(Element collectionEle, @Nullable BeanDefinition bd) {
 		//获取<list>元素中的value-type属性，即获取集合元素的数据类型
@@ -1208,6 +1234,13 @@ public class BeanDefinitionParserDelegate {
 		return target;
 	}
 
+	/*经过对 Spring Bean 配置信息转换的 Document 对象中的元素层层解析，Spring IOC 现在已经将 XML
+	形式定义的 Bean 配置信息转换为 Spring IOC 所识别的数据结构——BeanDefinition，它是 Bean 配
+	置信息中配置的 POJO 对象在 Spring IOC 容器中的映射，我们可以通过 AbstractBeanDefinition 为
+	入口，看到了 IOC 容器进行索引、查询和操作。
+	通过 Spring IOC 容器对 Bean 配置资源的解析后，IOC 容器大致完成了管理 Bean 对象的准备工作，
+	即初始化过程，但是最为重要的依赖注入还没有发生，现在在 IOC 容器中 BeanDefinition 存储的只是
+	一些静态信息，接下来需要向容器注册 Bean 定义信息才能全部完成 IOC 容器的初始化过程*/
 	//具体解析<list>集合元素，<array>、<list>和<set>都使用该方法解析
 	protected void parseCollectionElements(
 			NodeList elementNodes, Collection<Object> target, @Nullable BeanDefinition bd, String defaultElementType) {

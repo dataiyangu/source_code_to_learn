@@ -122,6 +122,13 @@ import org.springframework.util.ReflectionUtils;
  * @see org.springframework.context.ApplicationListener
  * @see org.springframework.context.MessageSource
  */
+		/*通 过 分 析 ClassPathXmlApplicationContext 的 源 代 码 可 以 知 道 ， 在 创 建
+		ClassPathXmlApplicationContext 容器时，构造方法做以下两项重要工作：
+		首先，调用父类容器的构造方法(super(parent)方法)为容器设置好 Bean 资源加载器。
+		然 后 ， 再 调 用 父 类 AbstractRefreshableConfigApplicationContext 的
+		setConfigLocations(configLocations)方法设置 Bean 配置信息的定位路径。
+		通 过 追 踪 ClassPathXmlApplicationContext 的 继 承 体 系 ， 发 现 其 父 类 的 父 类
+		AbstractApplicationContext 中初始化 IOC 容器所做的主要源码如下：*/
 public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		implements ConfigurableApplicationContext {
 
@@ -515,12 +522,30 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	public Collection<ApplicationListener<?>> getApplicationListeners() {
 		return this.applicationListeners;
 	}
+	/*可以从前面的ClassPathXmlApplicationContext中的refresh点过来*/
 
 	/*	SpringIOC 容器对 Bean 配置资源的载入是从 refresh()函数开始的，refresh()是一个模板方法，规定了
 	IOC 容 器 的 启 动 流 程 ， 有 些 逻 辑 要 交 给 其 子 类 去 实 现 。 它 对 Bean 配 置 资 源 进 行 载 入
 	ClassPathXmlApplicationContext 通过调用其父类 AbstractApplicationContext 的 refresh()函数启
 	动整个 IOC 容器对 Bean 定义的载入过程*/
 
+	/*refresh()方法主要为 IOC 容器 Bean 的生命周期管理提供条件，Spring IOC 容器载入 Bean 配置信息
+	从 其 子 类 容 器 的 refreshBeanFactory() 方 法 启 动 ， 所 以 整 个 refresh() 中
+	“ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();”这句以后代码的
+	都是注册容器的信息源和生命周期事件，我们前面说的载入就是从这句代码开始启动。*/
+
+	/*通过前面我们对 IOC 容器的实现和工作原理分析，我们已经知道 IOC 容器的初始化过程就是对 Bean
+	定义资源的定位、载入和注册，此时容器对 Bean 的依赖注入并没有发生，依赖注入主要是在应用程序
+	第一次向容器索取 Bean 时，通过 getBean()方法的调用完成。
+	当 Bean 定义资源的<Bean>元素中配置了 lazy-init=false 属性时，容器将会在初始化的时候对所配置
+	的 Bean 进行预实例化，Bean 的依赖注入在容器初始化的时候就已经完成。这样，当应用程序第一次
+	向容器索取被管理的 Bean 时，就不用再初始化和对 Bean 进行依赖注入了，直接从容器中获取已经完
+	成依赖注入的现成 Bean，可以提高应用第一次向容器获取 Bean 的性能。
+	先从 IOC 容器的初始化过程开始，我们知道 IOC 容器读入已经定位的 Bean 定义资源是从 refresh()方
+	法开始的，我们首先从 AbstractApplicationContext 类的 refresh()方法入手分析，源码如下：*/
+	/*在refresh()方法中 ConfigurableListableBeanFactorybeanFactory = obtainFreshBeanFactory();启
+	动了 Bean 定义资源的载入、注册过程，而 finishBeanFactoryInitialization 方法是对注册后的 Bean
+	定义中的预实例化(lazy-init=false,Spring 默认就是预实例化,即为 true)的 Bean 进行处理的地方。*/
 
 	/*refresh()方法的主要作用是：在创建 IOC 容器前，如果已经有容器存在，则需要把已有的容器销毁和
 	关闭，以保证在 refresh 之后使用的是新建立起来的 IOC 容器。它类似于对 IOC 容器的重启，在新建立
@@ -660,11 +685,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @see #refreshBeanFactory()
 	 * @see #getBeanFactory()
 	 */
+	/*obtainFreshBeanFactory()方法调用子类容器的 refreshBeanFactory()方法，启动容器载入 Bean 配置
+	信息的过程，代码如下：*/
 	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
 		//这里使用了委派设计模式，父类定义了抽象的refreshBeanFactory()方法，具体实现调用子类容器的refreshBeanFactory()方法
 
 		// 1、策略模式是委派模式内部的一种实现形式，策略模式关注的结果是否能相互替代。
 		// 2、委派模式更关注分发和调度的过程
+
 		refreshBeanFactory();
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 		if (logger.isDebugEnabled()) {
@@ -1358,6 +1386,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	//---------------------------------------------------------------------
 	// Implementation of ResourcePatternResolver interface
 	//---------------------------------------------------------------------
+	// 其getResource(String location)方法用于载入资源
 	//载入资源
 	@Override
 	public Resource[] getResources(String locationPattern) throws IOException {
